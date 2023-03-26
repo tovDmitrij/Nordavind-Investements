@@ -1,0 +1,11 @@
+drop table investors;
+drop table events;
+drop table accounts;
+drop table operations;
+drop table distribution_conditions;
+drop table users;
+drop table cources;
+drop table currencies;
+drop table trade_bots;
+drop table account_types;
+drop table ownerships;
