@@ -38,11 +38,13 @@ namespace api.Controllers
         public IActionResult SignIn(string email, string password)
         {
             string hashedPass = Security.HashPassword(email, password);
-            if (_db.GetByEmailAndPassword(email, hashedPass) == null)
+            var user = _db.GetByEmailAndPassword(email, hashedPass);
+            if (user == null)
             {
                 return StatusCode(404, "Пользователя с такой почтой и паролем не существует");
             }
 
+            HttpContext.Session.SetString("user", user.ID.ToString());
             return StatusCode(200, "Пользователь найден");
         }
     }
