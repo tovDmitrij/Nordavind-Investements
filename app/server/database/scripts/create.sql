@@ -1,7 +1,10 @@
---------------------------
--- СОЗДАНИЕ БАЗЫ ДАННЫХ --
---------------------------
 --наименование бд nordavind_investements
+
+
+
+-------------
+-- ТАБЛИЦЫ --
+-------------
 create table if not exists users(
 	id serial primary key,
 	surname text not null,
@@ -37,9 +40,8 @@ create table if not exists trade_bots(
 	description text not null
 );
 
-create table if not exists distribution_conditions(
+create table if not exists conditions(
 	id serial primary key,
-	user_id integer references users(id),
 	title text not null,
 	value decimal not null,
 	description text not null
@@ -63,7 +65,7 @@ create table if not exists accounts(
 	type integer not null references account_types(id),
 	currency integer not null references currencies(id),
 	bot integer not null references trade_bots(id),
-	condition integer not null references distribution_conditions(id),
+	condition integer not null references conditions(id),
 	ownership integer not null references ownerships(id),
 	title text not null,
 	date timestamp default current_timestamp not null
@@ -82,6 +84,7 @@ create table if not exists events(
 	account_from integer not null references accounts(id),
 	account_to integer references accounts(id),
 	value decimal not null,
+	hold_interest boolean not null,
 	date timestamp default current_timestamp not null
 );
 
@@ -91,7 +94,7 @@ create table if not exists events(
 -- ПРЕДСТАВЛЕНИЯ --
 -------------------
 --Состояние по счёту
-create or replace view view_account_info as
+/*create or replace view view_account_info as
 	select a.id "id", a.title title, at.title type, 
 		os.title ownership, c.short_title currency, 
 		dc.title condition, tb.title trade_bot,
@@ -113,11 +116,13 @@ create or replace view view_account_info as
 		left join trade_bots tb 				on a.bot = tb.id
 		left join distribution_conditions dc 	on a.condition = dc.id
 		left join ownerships os					on a.ownership = os.id
-		left join events e						on a.id = e.account_to
+		left join events e						on a.id = e.account_to*/
 		
---История счёта
-create or replace view view_account_history as
-	select 
-	from accounts a
-		left join events e on a.id = e.account_to
-		
+	
+	
+----------------------------
+-- ПОЛЬЗОВАТЕЛЬ С ПРАВАМИ --
+----------------------------
+create user user_default with password 'jwu7iSQ';
+grant all privileges on all tables in schema public to user_default;
+grant all privileges on all sequences in schema public to user_default;

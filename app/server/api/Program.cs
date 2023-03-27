@@ -23,14 +23,17 @@ namespace api
             builder.Services.AddDbContext<DataContext>(options =>
                 options.UseNpgsql(builder.Configuration.GetConnectionString("nordavind_investements_user_default"))    
             );
-            builder.Services.AddScoped<IUserRepos, UserRepos>();
             builder.Services.AddDistributedMemoryCache();
             builder.Services.AddSession(options =>
             {
-                options.Cookie.Name = "keklol";
+                options.Cookie.Name = "user";
                 options.IdleTimeout = TimeSpan.FromMinutes(20);
                 options.Cookie.IsEssential = true;
             });
+
+
+
+            builder.Services.AddScoped<IUserRepos, UserRepos>();
 
             #endregion
 
