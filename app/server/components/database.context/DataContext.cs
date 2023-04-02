@@ -7,7 +7,10 @@ namespace database.context
     /// </summary>
     public sealed class DataContext: DbContext
     {
-        public DbSet<UserModel> Users { get; set; }
+        /// <summary>
+        /// Таблица с пользователями
+        /// </summary>
+        public DbSet<UserModel> TableUsers { get; set; }
 
         public DataContext(DbContextOptions options) : base(options) { }
     }

@@ -1,34 +1,32 @@
 ﻿using database.context.Models;
+using misc.security;
 namespace database.context.Repos
 {
-    public class UserRepos : IUserRepos
+    public sealed class UserRepos : IUserRepos
     {
         private readonly DataContext _db;
 
         public UserRepos(DataContext db) => _db = db;
 
+        public bool IsEmailBusy(string email) => _db.TableUsers
+            .Any(u => u.Email == email);
+
+        public bool IsUserExist(string email, string password) => _db.TableUsers
+            .Any(user => user.Email == email && user.Password == Security.HashPassword(email, password));
+
         public void Add(string email, string password, string surname, string name, string? patronymic)
         {
-            _db.Users.Add(new(surname, name, patronymic, email, password));
+            _db.TableUsers.Add(new(
+                surname, 
+                name, 
+                patronymic, 
+                email, 
+                Security.HashPassword(email,password)));
             _db.SaveChanges();
         }
 
-        public UserModel? GetByEmail(string email)
-        {
-            return _db.Users.FirstOrDefault(u => 
-                u.Email == email);
-        }
-
-        public UserModel? GetByEmailAndPassword(string email, string password)
-        {
-            return _db.Users.FirstOrDefault(u => 
-                u.Email == email && u.Password == password);
-        }
-
-        public UserModel? GetByID(int id)
-        {
-            return _db.Users.FirstOrDefault(u => 
-                u.ID == id);
-        }
+        public UserModel? GetUserInfo(string email, string password) => _db.TableUsers
+            .FirstOrDefault(u => 
+                u.Email == email && u.Password == Security.HashPassword(email, password));
     }
 }
