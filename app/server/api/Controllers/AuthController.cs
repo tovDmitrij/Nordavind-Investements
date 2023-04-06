@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using database.context.Repos;
-using misc.security;
-using Microsoft.Net.Http.Headers;
-using api.Misc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-
+using api.Misc;
+using database.context.Repos;
 namespace api.Controllers
 {
     [ApiController]
@@ -25,35 +22,19 @@ namespace api.Controllers
         /// <param name="surname">Фамилия пользователя</param>
         /// <param name="name">Имя пользователя</param>
         /// <param name="patronymic">Отчество пользователя</param>
-        [HttpPost("SignUp")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(406)]
+        [HttpPost("SignUp/email={email}&password={password}&surname={surname}&name={name}&patronymic={patronymic}")]
         public IActionResult SignUp(string email, string password, string surname, string name, string? patronymic)
         {
             switch (_user.IsEmailBusy(email))
             {
                 case true:
-                    return StatusCode(406, 
-                        new
-                        {
-                            status = "Почта уже занята другим пользователем"
-                        });
+                    return StatusCode(406, new { status = "Почта уже занята другим пользователем" });
+
                 case false:
-                    try
-                    {
-                        _user.Add(email, password, surname, name, patronymic);
-                    }
-                    catch (Exception e)
-                    {
-                        return StatusCode(406, 
-                            new 
-                            { 
-                                status = e.Message 
-                            });
-                    }
-                    return StatusCode(200, 
-                        new 
-                        {
-                            status = "Пользователь успешно зарегистрирован" 
-                        });
+                    _user.Add(email, password, surname, name, patronymic);
+                    return StatusCode(200, new { status = "Пользователь успешно зарегистрирован" });
             }
         }
 
@@ -62,7 +43,9 @@ namespace api.Controllers
         /// </summary>
         /// <param name="email">Почта пользователя</param>
         /// <param name="password">Пароль пользоватея</param>
-        [HttpPost("SignIn")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [HttpPost("SignIn/email={email}&password={password}")]
         public IActionResult SignIn(string email, string password)
         {
             switch (_user.IsUserExist(email, password))
@@ -79,8 +62,7 @@ namespace api.Controllers
                         expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(30)),
                         signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha512));
 
-                    return StatusCode(200, 
-                        new 
+                    return StatusCode(200, new 
                         { 
                             status = "Пользователь успешно найден",
                             id = userInfo.ID,
@@ -88,11 +70,7 @@ namespace api.Controllers
                         });
 
                 case false:
-                    return StatusCode(404, 
-                        new 
-                        { 
-                            status = "Пользователя с такой почтой и паролем не существует" 
-                        });
+                    return StatusCode(404, new { status = "Пользователя с такой почтой и паролем не существует" });
             }
         }
     }

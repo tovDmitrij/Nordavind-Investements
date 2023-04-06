@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using api.Misc;
+using api.Middlewares;
 using database.context;
 using database.context.Repos;
-using api.Misc;
 namespace api
 {
     public class Program
@@ -36,12 +37,8 @@ namespace api
             builder.Services.AddSwaggerGen();
             builder.Services.AddCors();
             builder.Services.AddDistributedMemoryCache();
-            builder.Services.AddSession(options =>
-            {
-                options.Cookie.Name = "user";
-                options.IdleTimeout = TimeSpan.FromMinutes(20);
-                options.Cookie.IsEssential = true;
-            });
+            builder.Services.AddSession(options => { options.IdleTimeout = TimeSpan.FromMinutes(20); });
+
             builder.Services.AddDbContext<DataContext>(options =>
                 options.UseNpgsql(builder.Configuration.GetConnectionString("nordavind_investements_user_default"))    
             );
@@ -60,6 +57,7 @@ namespace api
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
             app.UseCors(builder => builder
                 .AllowAnyMethod()
                 .AllowAnyHeader()

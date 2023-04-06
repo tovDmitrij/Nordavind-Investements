@@ -21,6 +21,7 @@ namespace api.Misc
         /// Ключ для шифрования токена
         /// </summary>
         private const string KEY = "mysupersecret_secretkey!123";
+
         public static SymmetricSecurityKey GetSymmetricSecurityKey() =>
             new(Encoding.UTF8.GetBytes(KEY));
     }
