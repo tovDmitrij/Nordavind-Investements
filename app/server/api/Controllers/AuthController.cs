@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using api.Misc;
 using database.context.Repos;
 namespace api.Controllers
@@ -24,8 +24,8 @@ namespace api.Controllers
         /// <param name="patronymic">Отчество пользователя</param>
         [ProducesResponseType(200)]
         [ProducesResponseType(406)]
-        [HttpPost("SignUp/email={email}&password={password}&surname={surname}&name={name}&patronymic={patronymic}")]
-        public IActionResult SignUp(string email, string password, string surname, string name, string? patronymic)
+        [HttpPost("SignUp/email={email}&password={password}")]
+        public IActionResult SignUp(string email, string password)
         {
             switch (_user.IsEmailBusy(email))
             {
@@ -33,7 +33,7 @@ namespace api.Controllers
                     return StatusCode(406, new { status = "Почта уже занята другим пользователем" });
 
                 case false:
-                    _user.Add(email, password, surname, name, patronymic);
+                    _user.Add(email, password);
                     return StatusCode(200, new { status = "Пользователь успешно зарегистрирован" });
             }
         }

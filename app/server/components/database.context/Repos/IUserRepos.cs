@@ -17,7 +17,6 @@ namespace database.context.Repos
         /// Метод, проверяющий занята ли кем-то введённая почта
         /// </summary>
         /// <param name="email"></param>
-        /// <returns></returns>
         public bool IsEmailBusy(string email);
 
         /// <summary>
@@ -25,10 +24,7 @@ namespace database.context.Repos
         /// </summary>
         /// <param name="email">Почта пользователя</param>
         /// <param name="password">Пароль пользователя</param>
-        /// <param name="surname">Фамилия пользователя</param>
-        /// <param name="name">Имя пользователя</param>
-        /// <param name="patronymic">Отчество пользователя</param>
-        public void Add(string email, string password, string surname, string name, string? patronymic);
+        public void Add(string email, string password);
 
         /// <summary>
         /// Получить базовую информацию о пользователе по его почте и паролю

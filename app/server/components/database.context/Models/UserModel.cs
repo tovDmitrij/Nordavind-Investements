@@ -16,26 +16,6 @@ namespace database.context.Models
         public int ID { get; set; }
 
         /// <summary>
-        /// Фамилия пользователя
-        /// </summary>
-        [Required]
-        [Column("surname")]
-        public string Surname { get; set; }
-
-        /// <summary>
-        /// Имя пользователя
-        /// </summary>
-        [Required]
-        [Column("name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Отчество пользователя
-        /// </summary>
-        [Column("patronymic")]
-        public string? Patronymic { get; set; }
-
-        /// <summary>
         /// Почта пользователя
         /// </summary>
         [Required]
@@ -56,22 +36,14 @@ namespace database.context.Models
         [Column("date")]
         public DateTime RegistrationDate { get; set; }
 
-        public UserModel(int id, string surname, string name, string? patronymic, string email, string password, DateTime date)
+        public UserModel(int id, string email, string password, DateTime date) : this(email, password)
         {
             ID = id;
-            Surname = surname;
-            Name = name;
-            Patronymic = patronymic;
-            Email = email;
-            Password = password;
             RegistrationDate = date;
         }
 
-        public UserModel(string surname, string name, string patronymic, string email, string password)
+        public UserModel(string email, string password)
         {
-            Surname = surname;
-            Name = name;
-            Patronymic = patronymic;
             Email = email;
             Password = password;
         }

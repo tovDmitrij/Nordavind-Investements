@@ -14,12 +14,9 @@ namespace database.context.Repos
         public bool IsUserExist(string email, string password) => _db.TableUsers
             .Any(user => user.Email == email && user.Password == Security.HashPassword(email, password));
 
-        public void Add(string email, string password, string surname, string name, string? patronymic)
+        public void Add(string email, string password)
         {
             _db.TableUsers.Add(new(
-                surname, 
-                name, 
-                patronymic, 
                 email, 
                 Security.HashPassword(email,password)));
             _db.SaveChanges();
