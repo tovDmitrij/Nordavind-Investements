@@ -43,6 +43,7 @@ namespace api
                 options.UseNpgsql(builder.Configuration.GetConnectionString("nordavind_investements_user_default"))    
             );
             builder.Services.AddScoped<IUserRepos, UserRepos>();
+            builder.Services.AddScoped<IDirectoryRepos, DirectoryRepos>();
 
             #endregion
 
