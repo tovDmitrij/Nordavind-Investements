@@ -92,6 +92,7 @@ create table if not exists flip_events(
 
 create table if not exists sell_events(
 	id integer primary key references events(id),
+	account_id integer not null references accounts(id),
 	bot_type integer not null references trade_bots(id)
 );
 
@@ -149,13 +150,22 @@ create or replace view view_account_details as
 	(
 		select sum(e.value)
 		from events e
-		where e.account_id = a.id and e.operation_type = (select id from operations where title = 'Ввод средств')
+			left join main_events me on me.id = e.id
+		where me.account_id = a.id and e.operation_type = (select id from operations where title = 'Ввод средств')
 	)
 	-
 	(
 		select sum(e.value)
 		from events e
-		where e.account_id = a.id and e.operation_type = (select id from operations where title != 'Ввод средств')
+			left join main_events me on me.id = e.id
+		where me.account_id = a.id and e.operation_type = (select id from operations where title = 'Вывод средств')
+	)
+	-
+	(
+		select sum(e.value)
+		from events e
+			left join main_events me on me.id = e.id
+		where me.account_id = a.id and e.operation_type = (select id from operations where title = 'Вывод процентов')
 	) value, 
 	(
 		select sum(b.closed_trade_pl)
@@ -179,6 +189,7 @@ create or replace view view_history_main_events as
 		left join investor_events ie on ie.event_id = e.id
 		left join investors i on i.id = ai.investor_id
 		left join operations o on o.id = e.operation_type
+	order by e.date;
 	
 --События на переброс средств со счёта на счёт
 create or replace view view_history_flip_events as
@@ -190,6 +201,7 @@ create or replace view view_history_flip_events as
 		left join investor_events ie on ie.event_id = e.id
 		left join investors i on i.id = ai.investor_id
 		left join operations o on o.id = e.operation_type
+	order by e.date;
 		
 --События на оплату ЗП сотрудникам
 create or replace view view_history_pay_events as
@@ -197,23 +209,16 @@ create or replace view view_history_pay_events as
 	from pay_events pe
 		left join events e on pe.id = e.id
 		left join operations o on o.id = e.operation_type
+	order by e.date;
 
 --События на продажу ботов
 create or replace view view_history_sell_events as
-	select e.id event_id, e.date, o.id op_id, o.title op_title, e.value, tb.id bot_id, tb.title bot_title
+	select e.id event_id, e.date, o.id op_id, o.title op_title, se.account_id, e.value, tb.id bot_id, tb.title bot_title
 	from sell_events se
 		left join events e on se.id = e.id
 		left join trade_bots tb on tb.id = se.bot_type
 		left join operations o on o.id = e.operation_type
-	
---Список результатов торгов (эксель страница "Торги")
-create or replace view view_history_bargaining as
-	...
-	
---Диаграмма
-create or replace view view_diagram as
-	select ... investors_value, ... our_value, ... investors_percent, ... our_percent, ... bonus
-	from 
+	order by e.date;
 	
 	
 	
