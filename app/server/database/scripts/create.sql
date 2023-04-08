@@ -71,39 +71,33 @@ create table if not exists accounts(
 create table if not exists events(
 	id serial primary key,
 	operation_type integer not null references operations(id),
-	account_id integer not null references accounts(id),
 	value decimal not null,
 	description text,
 	date timestamp default current_timestamp not null
 );
 
 create table if not exists main_events(
-	id serial primary key references events(id),
+	id integer primary key references events(id),
+	account_id integer not null references accounts(id),
 	hold_interest boolean default true not null,
 	link text
 );
 
 create table if not exists flip_events(
-	id serial primary key references events(id),
+	id integer primary key references events(id),
+	account_from integer not null references accounts(id),
 	account_to integer not null references accounts(id),
 	fund_type integer not null references funds(id)
 );
 
 create table if not exists sell_events(
-	id serial primary key,
-	account_id integer not null references accounts(id),
-	bot_type integer not null references trade_bots(id),
-	value decimal not null,
-	description text,
-	date timestamp default current_timestamp not null
+	id integer primary key references events(id),
+	bot_type integer not null references trade_bots(id)
 );
 
 create table if not exists pay_events(
-	id serial primary key,
-	link text not null,
-	value decimal not null,
-	description text,
-	date timestamp default current_timestamp not null
+	id integer primary key references events(id),
+	link text not null
 );
 
 create table if not exists bargaining(
@@ -174,18 +168,47 @@ create or replace view view_account_details as
 		left join currencies cc on a.currency_type = cc.id
 		left join conditions ct on a.condition_type = ct.id
 		left join trade_bots tb on a.bot_type = tb.id;
-
---События счёта
-create or replace view view_account_history as
-	select e.id event_id, i.surname||' '||i.name||' '||i.patronymic investor, e.date, e.value, e.account_id "A/C X", fe.account_to "A/C Y"
+	
+--События на ввод и вывод средств со счетов
+create or replace view view_history_main_events as
+	select e.id event_id, i.surname||' '||i.name||' '||i.patronymic investor, e.date, o.title op_title, e.value, me.account_id "A/C No"
 	from accounts a
-		left join events e on e.account_id = a.id
-		left join flip_events fe on fe.id = e.id
-		left join main_events me on me.id = e.id
+		left join main_events me on me.account_id = a.id
+		left join events e on e.id = me.id
 		left join account_investors ai on ai.account_id = a.id
 		left join investor_events ie on ie.event_id = e.id
 		left join investors i on i.id = ai.investor_id
-	order by e.date;
+		left join operations o on o.id = e.operation_type
+	
+--События на переброс средств со счёта на счёт
+create or replace view view_history_flip_events as
+	select e.id event_id, e.date, o.id op_id, o.title op_title, e.value, fe.account_from "A/C X", fe.account_to "A/C Y"
+	from accounts a
+		left join flip_events fe on fe.account_from = a.id
+		left join events e on e.id = fe.id
+		left join account_investors ai on ai.account_id = a.id
+		left join investor_events ie on ie.event_id = e.id
+		left join investors i on i.id = ai.investor_id
+		left join operations o on o.id = e.operation_type
+		
+--События на оплату ЗП сотрудникам
+create or replace view view_history_pay_events as
+	select e.id event_id, e.date, o.id op_id, o.title op_title, e.value, pe.link
+	from pay_events pe
+		left join events e on pe.id = e.id
+		left join operations o on o.id = e.operation_type
+
+--События на продажу ботов
+create or replace view view_history_sell_events as
+	select e.id event_id, e.date, o.id op_id, o.title op_title, e.value, tb.id bot_id, tb.title bot_title
+	from sell_events se
+		left join events e on se.id = e.id
+		left join trade_bots tb on tb.id = se.bot_type
+		left join operations o on o.id = e.operation_type
+	
+--Список результатов торгов (эксель страница "Торги")
+create or replace view view_history_bargaining as
+	...
 	
 --Диаграмма
 create or replace view view_diagram as

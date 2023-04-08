@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![nordavind_investements_db_design](https://user-images.githubusercontent.com/86602542/230631052-de931f58-3ef8-4005-afba-f7985177a3e1.svg)
+![nordavind_investements_db_design](https://user-images.githubusercontent.com/86602542/230709034-363ac979-0b52-4bdc-9260-8904b6d37c0b.svg)
 
 </div>
 
