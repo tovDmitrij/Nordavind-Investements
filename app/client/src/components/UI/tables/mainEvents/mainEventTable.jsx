@@ -1,14 +1,14 @@
 import React from "react";
-import MyButton from '../.././button/MyButton'
+import MyButton from '../../button/MyButton'
 import { useFetching } from "../../../hooks/useFetching";
 
 
 /**
- * Таблица событий перебросов баблища с одного счёта на другой
+ * Таблица основных событий  
  * @param {*} events - список событий
  * @param {*} errorFunc - callback для отправки сообщения об ошибке
  */
-export const FlipEventTable = ({events, errorFunc}) => {
+export const MainEventTable = ({events, errorFunc}) => {
     const [DeleteEvent, isDeleteLoading, deleteError] = useFetching(async (event_id) => {
 
     })
@@ -19,7 +19,7 @@ export const FlipEventTable = ({events, errorFunc}) => {
     return (
         <div className="grid gap-4 place-items-center grid-cols-1 grid-rows-2">
             {isDeleteLoading}
-            <h1>Переброс</h1>
+            <h1>Ввод/вывод средств и вывод процентов </h1>
             <table className="shadow-lg bg-white">
                 <thead>
                     <tr>

@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { useFetching } from '../../components/hooks/useFetching'
-import { FlipEventTable } from '../../components/UI/tables/flipEvents/flipEventTable'
+import { MainEventTable } from '../../components/UI/tables/mainEvents/mainEventTable'
 import { Loader } from '../../components/UI/loader/Loader'
 import { ErrorPanel } from '../../components/UI/error/ErrorPanel'
 import classes from './EventsPage.module.css'
-
-
+import PayEventTable from '../../components/UI/tables/payEvents/payEventTable'
 export const EventsPage = () => {
     const [responseError, setError] = useState('')
-    const [flipEvents, setFlipEvents] = useState([])
+    const [mainEvents, setMainEvents] = useState([])
 
-    const [FlipList, isFlipLoading, error] = useFetching(async () => {
-        setFlipEvents([{
+    const [MainList, isMainLoading, error] = useFetching(async () => {
+        setMainEvents([{
             event_id: 1,
             date: "2022-01-01",
             investor: "FIO1",
@@ -30,7 +29,7 @@ export const EventsPage = () => {
     })
 
     useEffect(() => {
-        FlipList()
+        MainList()
     }, [])
 
     return (
@@ -40,13 +39,13 @@ export const EventsPage = () => {
 
             <h1>Список событий</h1>
 
-            {isFlipLoading ?
+            {isMainLoading ?
                 <Loader />
                 :
-                <FlipEventTable events={flipEvents} errorFunc={setError} />
+                <MainEventTable events={mainEvents} errorFunc={setError} />
             }
 
-            {/**/}
+            <PayEventTable events={[]}/>
             
         </div>
     )
