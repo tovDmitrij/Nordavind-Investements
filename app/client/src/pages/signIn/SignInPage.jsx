@@ -53,7 +53,7 @@ export const SignInPage = () => {
 
     return(
         <div className={`grid place-items-center gap-4 grid-cols-1 grid-rows-1 ${classes.myPage}`}>
-            <SignInForm accept={SignIn} />
+            <SignInForm accept={SignIn} error={setError} />
             {isLoading && 
                 <Loader />
             }

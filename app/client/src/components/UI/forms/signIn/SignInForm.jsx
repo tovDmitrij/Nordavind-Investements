@@ -7,8 +7,9 @@ import classes from './SignInForm.module.css'
 /**
  * Форма авторизации пользователя в системе
  * @param {*} accept - callback-функция для передачи данных
+ * @param {*} error - callback-функция для передачи возможной ошибки
  */
-export const SignInForm = ({accept}) => {
+export const SignInForm = ({accept, error}) => {
     const[email, setEmail] = useState('')
     const[password, setPassword] = useState('')
 
