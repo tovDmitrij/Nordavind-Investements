@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using database.context.Models;
 using database.context.Models.Data;
+using database.context.Models.Events;
 
 namespace database.context
 {
@@ -25,6 +26,26 @@ namespace database.context
         public DbSet<OperationModel> TableOperations { get; set; }
 
         public DbSet<FundModel> TableFunds { get; set; }
+
+        public DbSet<EventModel> TableEvents { get; set; }
+
+        public DbSet<MainEventModel> TableMainEvents { get; set; }
+
+        public DbSet<FlipEventModel> TableFlipEvents { get; set; }
+
+        public DbSet<SellEventModel> TableSellEvents { get; set; }
+
+        public DbSet<PayEventModel> TablePayEvents { get; set; }
+
+        public DbSet<HistoryMainEventModel> TableHistoryMainEvents { get; set; }
+
+        public DbSet<HistoryFlipEventModel> TableHistoryFlipEvents { get; set; }
+
+        public DbSet<HistoryPayEventModel> TableHistoryPayEvents { get; set; }
+
+        public DbSet<HistorySellEventModel> TableHistorySellEvents { get; set; }
+
+        public DbSet<AccountModel> TableAccounts { get; set; }
 
         public DataContext(DbContextOptions options) : base(options) { }
     }
