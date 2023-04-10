@@ -3,7 +3,7 @@ import MyButton from '../../button/MyButton'
 import { useFetching } from "../../../hooks/useFetching";
 import {MyModal} from "../../MyModal/MyModal"
 import { useState } from "react"
-export const PayEventTable= ({events})=>{
+export const SellEventTable= ({events})=>{
     const [DeleteEvent, isDeleteLoading, deleteError] = useFetching(async (event_id) => {
 
     })
@@ -53,4 +53,4 @@ export const PayEventTable= ({events})=>{
     );
     
 };
-export default PayEventTable;
+export default SellEventTable;

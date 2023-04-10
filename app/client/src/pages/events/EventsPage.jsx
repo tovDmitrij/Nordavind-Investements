@@ -8,7 +8,7 @@ import {PayEventTable} from '../../components/UI/tables/payEvents/payEventTable'
 import MyModal from "../../components/UI/MyModal/MyModal"
 import MyButton from '../../components/UI/button/MyButton'
 import {FlipEventTable} from '../../components/UI/tables/flipEvents/flipEvents';
-
+import {sellEventsTable} from '../../components/UI/tables/sellEvents/sellEventsTable';
 
 
 export const EventsPage = () => {
@@ -100,6 +100,11 @@ export const EventsPage = () => {
     })
 
 
+    const [SellList, isSellLoading ] = useFetching(async () => {
+        setSellEvents([{ 
+        }])
+
+    })
 
 
 
@@ -112,6 +117,7 @@ export const EventsPage = () => {
         MainList()
         PayList()
         FlipList()
+        SellList()
     }, [],[])
 
 
@@ -143,7 +149,11 @@ export const EventsPage = () => {
                  <FlipEventTable events={events}  errorFunc={setError} />
             }
              
-
+            {isSellLoading?
+                <Loader />
+                 :
+                 <sellEventsTable events={sellEvents}  errorFunc={setError} />
+            }
 
             <MyModal visible={modal} setVisible={setModal}><MyButton  style ={{marginTop: 30}} children={"Удалить"}/></MyModal>
         </div>
