@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import MyInput from '../../input/MyInput'
-import MyButton from '../../button/MyButton'
+import MyButton from '../../buttons/main/MyButton'
 import classes from './SignUpForm.module.css'
 
 
@@ -9,7 +9,7 @@ import classes from './SignUpForm.module.css'
  * @param {*} accept - callback-функция для передачи данных
  * @param {*} error - callback-функция для передачи возможной ошибки
  */
-export const SignUpForm = ({accept, error}) => {
+const SignUpForm = ({accept, error}) => {
     const[email, setEmail] = useState('')
     const[password, setPassword] = useState('')
     const[repeatedPass, setRepeatedPass] = useState('')
@@ -24,6 +24,7 @@ export const SignUpForm = ({accept, error}) => {
         const emailMatch = email.match(emailRegex)
         if (emailMatch == null){
             error("Почта не валидная")
+            return false;
         }
 
         const passRegex = /[\S+]{8,16}/g
@@ -31,9 +32,11 @@ export const SignUpForm = ({accept, error}) => {
         const repPassMatch = repeatedPass.match(passRegex)
         if (passMatch == null || repPassMatch == null){
             error("Пароль не валидный")
+            return false;
         }
         if (password !== repeatedPass){
             error('Пароли не совпадают')
+            return false;
         }
 
         const userInfo = {
@@ -64,3 +67,6 @@ export const SignUpForm = ({accept, error}) => {
         </form>
     )
 }
+
+
+export default SignUpForm

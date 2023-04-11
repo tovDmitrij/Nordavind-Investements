@@ -17,7 +17,8 @@
             }
             catch (Exception ex)
             {
-                await context.Response.WriteAsJsonAsync(new { statusCode = 500, status = "Произошла непредвиденная ошибка. Повторите позже" });
+                //await context.Response.WriteAsJsonAsync(new { statusCode = 500, status = "Произошла непредвиденная ошибка. Повторите позже" });
+                await context.Response.WriteAsJsonAsync(new { statusCode = 500, status = ex.Message });
                 /* TODO
                  * Сделать добавление логов в БД
                  */

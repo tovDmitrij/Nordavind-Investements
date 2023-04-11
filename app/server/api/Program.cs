@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using api.Misc;
 using api.Middlewares;
 using database.context;
-using database.context.Repos;
+using database.context.Repos.Directory;
+using database.context.Repos.User;
+using database.context.Repos.Event;
 namespace api
 {
     public class Program
@@ -44,6 +46,7 @@ namespace api
             );
             builder.Services.AddScoped<IUserRepos, UserRepos>();
             builder.Services.AddScoped<IDirectoryRepos, DirectoryRepos>();
+            builder.Services.AddScoped<IEventRepos, EventRepos>();
 
             #endregion
 

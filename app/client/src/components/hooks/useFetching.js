@@ -6,7 +6,7 @@ import { useState } from "react";
  * @param {*} callback - функция, во время выполнения которой будет показываться "крутилка" и ловиться ошибки
  * @returns {*} [fetching, isLoading, error]
  */
-export const useFetching = (callback) => {
+const useFetching = (callback) => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('')
 
@@ -23,3 +23,6 @@ export const useFetching = (callback) => {
 
     return [fetching, isLoading, error]
 }
+
+
+export default useFetching

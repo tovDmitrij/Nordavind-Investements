@@ -1,28 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using database.context.Repos;
-using misc.security;
-using Microsoft.Net.Http.Headers;
-using api.Misc;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-
+using Microsoft.AspNetCore.Authorization;
+using database.context.Repos.Directory;
 namespace api.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
 
     public class DirectoryController : ControllerBase
     {
         private readonly IDirectoryRepos _directory;
+
         public DirectoryController(IDirectoryRepos db) => _directory = db;
+
 
         [HttpGet("Сurrencies/Get")]
         public IActionResult Currencies() 
         {
             var currencies = _directory.GetCurrencies();
             if (!currencies.Any())
-                return StatusCode(404, new { status = "Данные были не найдены" });
+                return StatusCode(404, new { status = "Список пуст" });
             return StatusCode(200, new {status="Список был успешно сформирован", 
                 data=currencies });
         }
@@ -32,7 +29,7 @@ namespace api.Controllers
         {
             var accountTypes = _directory.GetAccountTypes();
             if (!accountTypes.Any())
-                return StatusCode(404, new { status = "Данные были не найдены" });
+                return StatusCode(404, new { status = "Список пуст" });
             return StatusCode(200, new { status = "Списик был успешно сформирован", 
                 data = accountTypes});
         }
@@ -42,7 +39,7 @@ namespace api.Controllers
         {
             var botTypes = _directory.GetBotTypes();
             if (!botTypes.Any())
-                return StatusCode(404, new { status = "Данные были не найдены" });
+                return StatusCode(404, new { status = "Список пуст" });
             return StatusCode(200, new { status = "Список был успешно сформирован", 
                 data=botTypes});
         }
@@ -52,7 +49,7 @@ namespace api.Controllers
         {
             var conditions = _directory.GetConditions();
             if (!conditions.Any())
-                return StatusCode(404, new { status = "Данные были не найдены" });
+                return StatusCode(404, new { status = "Список пуст" });
             return StatusCode(200, new {status="Список был успешно сформирован",
                 data=conditions});
         }
@@ -62,7 +59,7 @@ namespace api.Controllers
         {
             var operations = _directory.GetOperations();
             if (!operations.Any())
-                return StatusCode(404, new { status = "Данные были не найдены" });
+                return StatusCode(404, new { status = "Список пуст" });
             return StatusCode(200, new { status = "Список был успешно сформирован", data=operations});
         }
 
@@ -71,7 +68,7 @@ namespace api.Controllers
         {
             var funds = _directory.GetFunds();
             if (!funds.Any())
-                return StatusCode(404, new { status = "Данные были не найдены" });
+                return StatusCode(404, new { status = "Список пуст" });
             return StatusCode(200, new { status = "Списк был успешно сформирован", data = funds });
         }
 
@@ -86,7 +83,7 @@ namespace api.Controllers
         public IActionResult AccountTypes(string title, string description)
         {
             _directory.AddAccountType(new (title, description) );
-            return StatusCode(200, new { status = "Новый тип аккаунта был успешно добавлен" });
+            return StatusCode(200, new { status = "Новый тип счёта был успешно добавлен" });
         }
 
         [HttpPost("BotTypes/Add/title={title}&description={description}")]

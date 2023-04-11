@@ -3,7 +3,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using api.Misc;
-using database.context.Repos;
+using database.context.Repos.User;
 namespace api.Controllers
 {
     [ApiController]
@@ -19,11 +19,6 @@ namespace api.Controllers
         /// </summary>
         /// <param name="email">Почта пользователя</param>
         /// <param name="password">Пароль пользоватея</param>
-        /// <param name="surname">Фамилия пользователя</param>
-        /// <param name="name">Имя пользователя</param>
-        /// <param name="patronymic">Отчество пользователя</param>
-        [ProducesResponseType(200)]
-        [ProducesResponseType(406)]
         [HttpPost("SignUp/email={email}&password={password}")]
         public IActionResult SignUp(string email, string password)
         {
@@ -43,8 +38,6 @@ namespace api.Controllers
         /// </summary>
         /// <param name="email">Почта пользователя</param>
         /// <param name="password">Пароль пользоватея</param>
-        [ProducesResponseType(200)]
-        [ProducesResponseType(404)]
         [HttpPost("SignIn/email={email}&password={password}")]
         public IActionResult SignIn(string email, string password)
         {
@@ -65,7 +58,6 @@ namespace api.Controllers
                     return StatusCode(200, new 
                         { 
                             status = "Пользователь успешно найден",
-                            id = userInfo.ID,
                             token = new JwtSecurityTokenHandler().WriteToken(token)
                         });
 

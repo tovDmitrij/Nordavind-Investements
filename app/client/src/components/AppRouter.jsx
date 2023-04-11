@@ -1,16 +1,14 @@
 import React, { useContext } from 'react'
 import { Route, Routes, Navigate } from "react-router-dom"
-import { Loader } from './UI/loader/Loader'
+import FetchLoader from './UI/loaders/fetch/FetchLoader'
 import { AuthContext } from './context/authContext'
 import { publicRoutes, privateRoutes } from '../router/routes'
 
 
-export const AppRouter = () => {
+const AppRouter = () => {
     const {isAuth, setIsAuth, isLoading} = useContext(AuthContext)
 
-    if (isLoading) {
-        return <Loader />
-    }
+    if (isLoading) { return <FetchLoader /> }
 
     return (
         isAuth ?
@@ -29,3 +27,6 @@ export const AppRouter = () => {
         </Routes>)
     )
 }
+
+
+export default AppRouter

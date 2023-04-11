@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import MyInput from '../../input/MyInput'
-import MyButton from '../../button/MyButton'
+import MyButton from '../../buttons/main/MyButton'
 import classes from './SignInForm.module.css'
 
 
@@ -9,7 +9,7 @@ import classes from './SignInForm.module.css'
  * @param {*} accept - callback-функция для передачи данных
  * @param {*} error - callback-функция для передачи возможной ошибки
  */
-export const SignInForm = ({accept, error}) => {
+const SignInForm = ({accept, error}) => {
     const[email, setEmail] = useState('')
     const[password, setPassword] = useState('')
 
@@ -23,12 +23,14 @@ export const SignInForm = ({accept, error}) => {
         const emailMatch = email.match(emailRegex)
         if (emailMatch == null){
             error("Почта не валидная")
+            return false;
         }
 
         const passRegex = /[\S+]{8,16}/g
         const passMatch = password.match(passRegex)
         if (passMatch == null){
             error("Пароль не валидный")
+            return false;
         }
 
         const userInfo = {
@@ -55,3 +57,6 @@ export const SignInForm = ({accept, error}) => {
         </form>
     )
 }
+
+
+export default SignInForm
