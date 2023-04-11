@@ -1,4 +1,5 @@
-﻿using database.context.Models;
+﻿using database.context.Models.Data;
+
 namespace database.context.Repos
 {
     /// <summary>
@@ -21,6 +22,10 @@ namespace database.context.Repos
         public IEnumerable<AccountTypeModel> GetAccountTypes();
 
         public IEnumerable<BotTypeModel> GetBotTypes();
+
+        public IEnumerable<OperationModel> GetOperations();
+
+        public IEnumerable<FundModel> GetFunds();
 
         public void UpdateCurrency(int currencyId, string title, string short_title);
 

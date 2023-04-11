@@ -33,5 +33,6 @@ namespace database.context.Models.Events
         }
 
         public SellEventModel() { }
+
     }
 }
