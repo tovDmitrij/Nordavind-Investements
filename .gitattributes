@@ -1,0 +1,5 @@
+* text=auto
+
+*.sql	      linguist-language=PLpgSQL
+drop.sql	  linguist-detectable=false
+insert.sql  linguist-detectable=false
