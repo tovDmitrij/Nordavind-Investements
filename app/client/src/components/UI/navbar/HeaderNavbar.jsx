@@ -26,6 +26,7 @@ export const HeaderNavbar = () => {
         <div className={classes.navbar}>
             <div className={classes.navbar__links}>
                 <Link className={classes.links} to="/events">События</Link>
+                <Link className={classes.links} to="/directory">Справочник</Link>
                 {/*При добавлении страниц сюда добавлять новые ссылки!*/}
                 <MyButton 
                     className={classes.links} 
