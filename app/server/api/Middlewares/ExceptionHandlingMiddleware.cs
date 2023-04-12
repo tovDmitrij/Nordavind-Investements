@@ -1,4 +1,8 @@
-﻿namespace api.Middlewares
+﻿using System.Text.Json;
+using System.Text;
+using RabbitMQ.Client;
+using database.context.logs;
+namespace api.Middlewares
 {
     /// <summary>
     /// Миддлвэер-обработчик ошибок
@@ -18,10 +22,24 @@
             catch (Exception ex)
             {
                 await context.Response.WriteAsJsonAsync(new { statusCode = 500, status = "Произошла непредвиденная ошибка. Повторите позже" });
-                //await context.Response.WriteAsJsonAsync(new { statusCode = 500, status = ex.Message });
-                /* TODO
-                 * Сделать добавление логов в БД
-                 */
+
+                var factory = new ConnectionFactory() { HostName = "localhost" };
+                using (var connection = factory.CreateConnection())
+                {
+                    using (var channel = connection.CreateModel())
+                    {
+                        channel.ExchangeDeclare(
+                            exchange: "direct_logs",
+                            type: ExchangeType.Direct);
+
+                        channel.BasicPublish(
+                            exchange: "direct_logs",
+                            routingKey: "error",
+                            mandatory: false,
+                            basicProperties: null,
+                            body: Encoding.UTF8.GetBytes(JsonSerializer.Serialize<LogModel>(new(ex.Message, ex.Source, ex.StackTrace))));
+                    }
+                }
             }
         }
     }

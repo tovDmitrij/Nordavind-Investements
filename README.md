@@ -22,9 +22,11 @@ docker
 
 </div>
 
-Для реализации БД необходимо её создать с наименованием *nordavind_investements*, а после загрузить скрипты *create.sql* и *insert.sql*, находящиеся по адресу *app/server/database/scripts*.
+Для реализации БД необходимо её создать с наименованием *nordavind_investements*, а после загрузить скрипты *create.sql* и *insert.sql*, находящиеся в *app/server/database/scripts/nordavind_investements*.
 
-## :game_die: Архитектура сервера
+Опциональна БД для логгирования ошибок *nordavind_investements_logs*, скрипты которой находятся в *app/server/database/scripts/nordavind_investements_logs*.
+
+## :game_die: Архитектура сервера (на 12.04.23)
 
 <div align="center">
 
@@ -36,6 +38,10 @@ docker
 
 - *server/api* - непосредственно апишка. Сюда пишутся только контроллёры.
 - *server/components* - всё, что не контроллёры, выносится в отдельные компоненты
+- *server/components/api.logger.error* - логгер ошибок
+- *server/components/database.context* - взаимодействие с основной БД
+- *server/components/database.context.logs* - взаимодействие с БД логов
+- *server/components/misc.security* - шифрование паролей
 - *server/database* - скрипты для БД Postgres
 
 ## Архитектура клиента
