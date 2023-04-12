@@ -1,12 +1,6 @@
 --------------------------
 -- СОЗДАНИЕ БАЗЫ ДАННЫХ --
 --------------------------
-/*create database nordavind_investements with
-	owner = postgres
-	encoding = 'UTF8'
-	connection limit = -1
-	IS_TEMPLACE = False;*/
-
 create table if not exists users(
 	id serial primary key,
 	email text not null,
@@ -219,12 +213,3 @@ create or replace view view_history_sell_events as
 		left join trade_bots tb on tb.id = se.bot_type
 		left join operations o on o.id = e.operation_type
 	order by e.date;
-	
-	
-	
-----------------------------
--- ПОЛЬЗОВАТЕЛЬ С ПРАВАМИ --
-----------------------------
-/*create user user_default with password 'jwu7iSQ';
-grant all privileges on all tables in schema public to user_default;
-grant all privileges on all sequences in schema public to user_default;*/

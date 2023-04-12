@@ -1,0 +1,20 @@
+version: '3.5'
+
+services:
+  nord_ist_client:
+    build: ./app/client
+    image: nord_ist_client
+    ports:
+      - 3000:3000
+  nord_ist_database:
+    image: postgres:15
+    restart: always
+    container_name: "nord_ist_database"
+    environment:
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=nordavind_investements
+    ports: 
+      - "5432:5432"
+    volumes:
+      - ./app/server/database/scripts/create.sql /docker-entrypoint-initdb.d/
+      - ./app/server/database/scripts/insert.sql /docker-entrypoint-initdb.d/

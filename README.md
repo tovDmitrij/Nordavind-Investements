@@ -1,3 +1,19 @@
+## Установка через Docker (НЕ ДОДЕЛАНО)
+
+docker-compose up --build
+
+**Клиент**
+cd app/client
+docker build . -t nord_ist_client_image
+docker run -p 3000:3000 nord_ist_client_image
+
+**Сервер**
+cd app/server
+docker
+docker
+
+**База данных**
+
 ## :floppy_disk: Архитектура БД
 
 <div align="center">
