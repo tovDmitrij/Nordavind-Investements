@@ -1,5 +1,7 @@
 * text=auto
 
-*.sql	      linguist-language=PLpgSQL
-drop.sql	  linguist-detectable=false
-insert.sql  linguist-detectable=false
+*.dockerfile  linguist-detectable=true
+*.dockerfile  linguist-language=Dockerfile
+*.sql	        linguist-language=PLpgSQL
+drop.sql	    linguist-detectable=false
+insert.sql    linguist-detectable=false
