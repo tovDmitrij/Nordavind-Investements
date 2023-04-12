@@ -6,7 +6,6 @@ namespace api.Controllers
     [ApiController]
     [Authorize]
     [Route("api/[controller]")]
-
     public class DirectoryController : ControllerBase
     {
         private readonly IDirectoryRepos _directory;

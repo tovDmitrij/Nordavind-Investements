@@ -225,6 +225,6 @@ create or replace view view_history_sell_events as
 ----------------------------
 -- ПОЛЬЗОВАТЕЛЬ С ПРАВАМИ --
 ----------------------------
-create user user_default with password 'jwu7iSQ';
+/*create user user_default with password 'jwu7iSQ';
 grant all privileges on all tables in schema public to user_default;
-grant all privileges on all sequences in schema public to user_default;
+grant all privileges on all sequences in schema public to user_default;*/
