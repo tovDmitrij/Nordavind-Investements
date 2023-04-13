@@ -41,10 +41,34 @@ docker
 - *server/components/api.logger.error* - логгер ошибок
 - *server/components/database.context* - взаимодействие с основной БД
 - *server/components/database.context.logs* - взаимодействие с БД логов
-- *server/components/misc.security* - шифрование паролей
+- *server/components/misc.security* - хеширование паролей
 - *server/database* - скрипты для БД Postgres
 
-## Архитектура клиента
+## :desktop_computer: Архитектура клиента
 
 Архитектура клиента **классическая**, т.е. все элементы складываются в общие папки по смыслу. Например, все формы заполнения лежат в *src/components/UI/forms*.
+
 Потому как в клиенте настроена маршрутизация на основе сессии, то существует два списка маршрутов: приватные и публичные *src/router/routes.js*. При добавлении новой страницы в проект, необходимо в список приватных маршрутов добавить новый элемент для этой страницы.
+
+Для запросов к API необходимо использовать кастомный хук *useFetching* (*src/components/hooks/useFetching*), которая в качестве параметра принимает анонимную функцию (в к-рой выполняется непосредственно *fetch*). За примерами смотрите как реализованы уже готовые страницы (*src/pages/___.jsx*)
+
+## :computer: Стек технологий
+### :desktop_computer: Фронтенд
+```
+React
+```
+### :hammer_and_wrench: Бекэнд
+```
+ASP.NET Core 7
+```
+### :floppy_disk: База данных
+```
+PostgreSQL 15
+```
+### :scroll: Прочее
+```
+RabbitMQ
+Docker (?)
+Entity Framework
+Tailwind
+```
