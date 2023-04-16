@@ -2,6 +2,7 @@ import { SignInPage } from '../pages/signIn/SignInPage'
 import { SignUpPage } from '../pages/signUp/SignUpPage'
 import { EventsPage } from '../pages/events/EventsPage'
 import  DirectoryPage  from '../pages/directory/DirectoryPage'
+import BargainingPage from '../pages/bargaining/BargainingPage'
 
 
 
@@ -10,7 +11,8 @@ import  DirectoryPage  from '../pages/directory/DirectoryPage'
  */
 export const privateRoutes = [
     {path: '/events',   element: EventsPage},
-    {path: '/directory', element: DirectoryPage}
+    {path: '/directory', element: DirectoryPage},
+    {path: '/bargain', element:BargainingPage}
 ];
 
 /**
