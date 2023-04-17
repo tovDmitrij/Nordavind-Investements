@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using database.context.Repos;
 using misc.security;
 using Microsoft.Net.Http.Headers;
 using api.Misc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using database.context.Repos.Directory;
 
 namespace api.Controllers
 {
@@ -17,8 +17,11 @@ namespace api.Controllers
         private readonly IDirectoryRepos _directory;
         public DirectoryController(IDirectoryRepos db) => _directory = db;
 
+
+        #region Обработчики get-запросов
+
         [HttpGet("Сurrencies/Get")]
-        public IActionResult Currencies() 
+        public IActionResult GetCurrencies() 
         {
             var currencies = _directory.GetCurrencies();
             if (!currencies.Any())
@@ -28,7 +31,7 @@ namespace api.Controllers
         }
 
         [HttpGet("AccountTypes/Get")]
-        public IActionResult AccountTypes() 
+        public IActionResult GetAccountTypes() 
         {
             var accountTypes = _directory.GetAccountTypes();
             if (!accountTypes.Any())
@@ -38,7 +41,7 @@ namespace api.Controllers
         }
 
         [HttpGet("BotTypes/Get")]    
-        public IActionResult BotTypes() 
+        public IActionResult GetBotTypes() 
         {
             var botTypes = _directory.GetBotTypes();
             if (!botTypes.Any())
@@ -48,7 +51,7 @@ namespace api.Controllers
         }
 
         [HttpGet("Conditions/Get")]
-        public IActionResult Conditions() 
+        public IActionResult GetConditions() 
         {
             var conditions = _directory.GetConditions();
             if (!conditions.Any())
@@ -58,7 +61,7 @@ namespace api.Controllers
         }
 
         [HttpGet("Operations/Get")]
-        public IActionResult Operations()
+        public IActionResult GetOperations()
         {
             var operations = _directory.GetOperations();
             if (!operations.Any())
@@ -67,7 +70,7 @@ namespace api.Controllers
         }
 
         [HttpGet("Funds/Get")]
-        public IActionResult Funds()
+        public IActionResult GetFunds()
         {
             var funds = _directory.GetFunds();
             if (!funds.Any())
@@ -75,36 +78,46 @@ namespace api.Controllers
             return StatusCode(200, new { status = "Списк был успешно сформирован", data = funds });
         }
 
+        #endregion
+
+
+        #region Обработчики post-запросов
+
         [HttpPost("Currencies/Add/title={title}&short_title={short_title}")]
-        public IActionResult Currencies(string title, string short_title) 
+        public IActionResult AddCurrencies(string title, string short_title) 
         {
             _directory.AddCurrency( new (title, short_title) );
             return StatusCode(200, new { status = "Валюта была успешно добавлена" });
         }
 
         [HttpPost("AccountTypes/Add/title={title}&description={description}")]
-        public IActionResult AccountTypes(string title, string description)
+        public IActionResult AddAccountTypes(string title, string description)
         {
             _directory.AddAccountType(new (title, description) );
             return StatusCode(200, new { status = "Новый тип аккаунта был успешно добавлен" });
         }
 
         [HttpPost("BotTypes/Add/title={title}&description={description}")]
-        public IActionResult BotTypes(string title, string description) 
+        public IActionResult AddBotTypes(string title, string description) 
         {
             _directory.AddBotType(new(title, description));
             return StatusCode(200, new { status = "Новый тип бота был успешно добавлен" });
         }
 
         [HttpPost("Conditions/Add/title={title}&value={value}&description={description}")]
-        public IActionResult Conditions(string title, decimal value, string description) 
+        public IActionResult AddConditions(string title, decimal value, string description) 
         {
             _directory.AddCondition(new(title, value, description));
             return StatusCode(200, new { status = "Новые условия были успешно добавлены" });
         }
 
+        #endregion
+
+
+        #region Обработчики put-запросов
+
         [HttpPut("Currencies/Update/id={id}&title={title}&short_title={short_title}")]
-        public IActionResult Currencies(int id, string title, string short_title)
+        public IActionResult UpdateCurrencies(int id, string title, string short_title)
         {
             if (!_directory.IsCurrencyExists(id))
                 return StatusCode(404, new { status = "Данной валюты не существует" });
@@ -113,7 +126,7 @@ namespace api.Controllers
         }
 
         [HttpPut("Conditions/Update/id={id}&title={title}&value={value}&description={description}")]
-        public IActionResult Conditions(int id, string title, decimal value, string description)
+        public IActionResult UpdateConditions(int id, string title, decimal value, string description)
         {
             if (!_directory.IsConditionExists(id))
                 return StatusCode(404, new { status = "Данного условия не существует" });
@@ -122,7 +135,7 @@ namespace api.Controllers
         }
 
         [HttpPut("AccountTypes/Update/id={id}&title={title}&description={description}")]
-        public IActionResult AccountTypes(int id, string title, string description)
+        public IActionResult UpdateAccountTypes(int id, string title, string description)
         {
             if (!_directory.IsAccountTypeExists(id))
                 return StatusCode(404, new { status = "Данного типа аккаунта не существует" });
@@ -131,7 +144,7 @@ namespace api.Controllers
         }
 
         [HttpPut("BotTypes/Update/id={id}&title={title}&description={description}")]
-        public IActionResult BotTypes(int id, string title, string description)
+        public IActionResult UpdateBotTypes(int id, string title, string description)
         {
             if (!_directory.IsBotTypeExists(id))
                 return StatusCode(404, new { status = "Данного типа бота не сущетсвует" });
@@ -139,8 +152,13 @@ namespace api.Controllers
             return StatusCode(200, new { status = "Бот был успешно обновлён" });
         }
 
+        #endregion
+
+
+        #region Обработчики delete-запросов
+
         [HttpDelete("Currencies/Delete/id={id}")]
-        public IActionResult Currencies(int id)
+        public IActionResult DeleteCurrencies(int id)
         {
             if (!_directory.IsCurrencyExists(id))
                 return StatusCode(404, new { status = "Данной валюты не сущетсвует" });
@@ -149,7 +167,7 @@ namespace api.Controllers
         }
 
         [HttpDelete("Conditions/Delete/id={id}")]
-        public IActionResult Condition(int id)
+        public IActionResult DeleteCondition(int id)
         {
             if (!_directory.IsConditionExists(id))
                 return StatusCode(404, new { status = "Данного условия не существует" });
@@ -158,7 +176,7 @@ namespace api.Controllers
         }
 
         [HttpDelete("AccountTypes/Delete/id={id}")]
-        public IActionResult AccountTypes(int id)
+        public IActionResult DeleteAccountTypes(int id)
         {
             if (!_directory.IsAccountTypeExists(id))
                 return StatusCode(404, new { status = "Данного типа аккаунта не существует" });
@@ -166,11 +184,15 @@ namespace api.Controllers
         }
 
         [HttpDelete("BotTypes/Delete/id={id}")]
-        public IActionResult BotTypes(int id)
+        public IActionResult DeleteBotTypes(int id)
         {
             if (!_directory.IsBotTypeExists(id))
                 return StatusCode(404, new { status = "Данного типа бота не сущетсвует" });
             return StatusCode(200, new { status = "Тип бота был успешно удалён" });
         }
+
+        #endregion
+
+
     }
 }

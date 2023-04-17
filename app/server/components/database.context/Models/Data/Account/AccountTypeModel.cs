@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace database.context.Models.Data
+namespace database.context.Models.Data.Account
 {
     /// <summary>
     /// Базовая информация о пользователе в системе

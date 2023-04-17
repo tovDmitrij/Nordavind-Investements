@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using database.context.Repos;
 using misc.security;
 using Microsoft.Net.Http.Headers;
 using api.Misc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using database.context.Repos.Event;
 
 namespace api.Controllers
 {
@@ -15,7 +15,10 @@ namespace api.Controllers
     {
         private readonly IEventRepos _eventRepos;
         public EventController(IEventRepos db) => _eventRepos = db;
-        
+
+
+        #region Обработчики get-запросов
+
         [HttpGet("MainEvents/Get")]
         public IActionResult GetMainEventList()
         {
@@ -85,6 +88,10 @@ namespace api.Controllers
             return StatusCode(200, new { status = "События были найдены", data = events });
         }
 
+        #endregion
+
+
+        #region Обработчики post-запросов
 
         [HttpPost("MainEvents/Add/op_id={op_id:int}&acc_id={acc_id:int}&value={value:decimal}&date={date:datetime}&hold_interest={hold_interest:boolean}&link={link}")]
         public IActionResult AddEvent(int op_id, int acc_id, decimal value, DateTime date, bool hold_interest, string? link)
@@ -135,6 +142,11 @@ namespace api.Controllers
             return StatusCode(200, new { status = "Событие о продаже бота было добавлено" });
         }
 
+        #endregion
+
+
+        #region Обработчик put-запросов
+
         [HttpPut("MainEvents/Update/event_id={event_id:int}&acc_id={acc_id:int}&hold_interest={hold_interest:boolean}&link={link}")]
         public IActionResult UpdateMainEvent(int event_id, int acc_id, bool hold_interest, string link)
         {
@@ -183,6 +195,11 @@ namespace api.Controllers
             return StatusCode(200, new { status = "Событие было обновлено" });
         }
 
+        #endregion
+
+
+        #region Обработчики delete-запросов
+
         [HttpDelete("MainEvents/Delete/event_id={event_id:int}")]
         public IActionResult DeleteMainEvent(int event_id)
         {
@@ -218,5 +235,9 @@ namespace api.Controllers
             _eventRepos.DeleteSellEvent(event_id);
             return StatusCode(200, new { status = "Событие было удалено" });
         }
+
+        #endregion
+
+
     }
 }

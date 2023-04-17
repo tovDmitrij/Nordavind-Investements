@@ -2,11 +2,11 @@
 using Npgsql.PostgresTypes;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-namespace database.context.Models.Events
+namespace database.context.Models.Events.SellEvents
 {
     [Keyless]
-    [Table("view_history_flip_events")]
-    public sealed class HistoryFlipEventModel
+    [Table("view_history_sell_events")]
+    public sealed class HistorySellEventModel
     {
         [Required]
         [Column("event_id")]
@@ -25,29 +25,34 @@ namespace database.context.Models.Events
         public string OperationTitle { get; set; }
 
         [Required]
+        [Column("account_id")]
+        public int AccountId { get; set; }
+
+        [Required]
         [Column("value")]
         public decimal Value { get; set; }
 
         [Required]
-        [Column("A/C X")]
-        public int AccountFrom { get; set; }
+        [Column("bot_id")]
+        public int BotId { get; set; }
+
 
         [Required]
-        [Column("A/C Y")]
-        public int AccountTo { get; set; }
+        [Column("bot_title")]
+        public string BotTitle { get; set; }
 
-        public HistoryFlipEventModel(int event_id, DateTime date, int op_id, string op_title,decimal value,int account_from, int account_to)
+        public HistorySellEventModel(int event_id, DateTime date, int op_id, string op_title, int accountId, decimal value, int bot_id, string bot_title)
         {
             ID = event_id;
             Date = date;
             OperationId = op_id;
             OperationTitle = op_title;
+            AccountId = accountId;
             Value = value;
-            AccountFrom = account_from;
-            AccountTo = account_to;
+            BotId = bot_id;
+            BotTitle = bot_title;
         }
 
-        public HistoryFlipEventModel() { }
-       
+        public HistorySellEventModel() { }
     }
 }

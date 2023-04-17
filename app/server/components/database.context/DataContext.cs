@@ -2,6 +2,11 @@
 using database.context.Models;
 using database.context.Models.Data;
 using database.context.Models.Events;
+using database.context.Models.Events.MainEvents;
+using database.context.Models.Events.FlipEvents;
+using database.context.Models.Events.PayEvents;
+using database.context.Models.Events.SellEvents;
+using database.context.Models.Data.Account;
 
 namespace database.context
 {
@@ -47,6 +52,11 @@ namespace database.context
 
         public DbSet<AccountModel> TableAccounts { get; set; }
 
+        public DbSet<OwnershipModel> TableOwnerships { get; set; }
+
+        public DbSet<AccountDetailModel> TableAccountDetails { get; set; }
+
         public DataContext(DbContextOptions options) : base(options) { }
+
     }
 }

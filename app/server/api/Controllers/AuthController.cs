@@ -3,7 +3,8 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using api.Misc;
-using database.context.Repos;
+using database.context.Repos.User;
+
 namespace api.Controllers
 {
     [ApiController]

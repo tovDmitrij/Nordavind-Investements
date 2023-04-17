@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace database.context.Models.Events
+namespace database.context.Models.Events.MainEvents
 {
     /// <summary>
     /// Базовая информация о пользователе в системе

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace database.context.Models.Data
+namespace database.context.Models.Data.Account
 {
     [Table("accounts")]
     public sealed class AccountModel
@@ -38,7 +38,7 @@ namespace database.context.Models.Data
         [Column("date")]
         public DateTime Date { get; set; }
 
-        public AccountModel(int id, int type, int currency_type, int condition_type, int ownership_type, int bot_type, string title, DateTime date) : this(type, currency_type, condition_type, ownership_type,bot_type, title, date)
+        public AccountModel(int id, int type, int currency_type, int condition_type, int ownership_type, int bot_type, string title, DateTime date) : this(type, currency_type, condition_type, ownership_type, bot_type, title, date)
         {
             ID = id;
         }

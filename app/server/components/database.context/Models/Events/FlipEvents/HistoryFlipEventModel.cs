@@ -2,11 +2,11 @@
 using Npgsql.PostgresTypes;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-namespace database.context.Models.Events
+namespace database.context.Models.Events.FlipEvents
 {
     [Keyless]
-    [Table("view_history_pay_events")]
-    public sealed class HistoryPayEventModel
+    [Table("view_history_flip_events")]
+    public sealed class HistoryFlipEventModel
     {
         [Required]
         [Column("event_id")]
@@ -29,20 +29,25 @@ namespace database.context.Models.Events
         public decimal Value { get; set; }
 
         [Required]
-        [Column("link")]
-        public string Link { get; set; }
+        [Column("A/C X")]
+        public int AccountFrom { get; set; }
 
-        public HistoryPayEventModel(int event_id, DateTime date, int op_id, string op_title, decimal value, string link)
+        [Required]
+        [Column("A/C Y")]
+        public int AccountTo { get; set; }
+
+        public HistoryFlipEventModel(int event_id, DateTime date, int op_id, string op_title, decimal value, int account_from, int account_to)
         {
             ID = event_id;
             Date = date;
             OperationId = op_id;
             OperationTitle = op_title;
             Value = value;
-            Link = link;
+            AccountFrom = account_from;
+            AccountTo = account_to;
         }
 
-        public HistoryPayEventModel() { }
+        public HistoryFlipEventModel() { }
 
     }
 }

@@ -1,13 +1,17 @@
 ﻿using database.context.Models.Data;
+using database.context.Models.Data.Account;
 using misc.security;
 
-namespace database.context.Repos
+namespace database.context.Repos.Directory
 {
     public sealed class DirectoryRepos : IDirectoryRepos
     {
         private readonly DataContext _db;
 
         public DirectoryRepos(DataContext db) => _db = db;
+
+
+        #region Add-методы для добавления объектов в БД
 
         public void AddCurrency(CurrencyModel currency)
         {
@@ -33,6 +37,11 @@ namespace database.context.Repos
             _db.SaveChanges();
         }
 
+        #endregion
+
+
+        #region Get-методы для получения объектов из БД
+
         public IEnumerable<CurrencyModel> GetCurrencies() => _db.TableCurrencies.ToList();
 
         public IEnumerable<ConditionModel> GetConditions() => _db.TableConditions.ToList();
@@ -44,6 +53,11 @@ namespace database.context.Repos
         public IEnumerable<OperationModel> GetOperations() => _db.TableOperations.ToList();
 
         public IEnumerable<FundModel> GetFunds() => _db.TableFunds.ToList();
+
+        #endregion
+
+
+        #region Update-методы для обновления данных об объектах БД
 
         public void UpdateCurrency(int currencyId, string title, string short_title)
         {
@@ -82,6 +96,11 @@ namespace database.context.Repos
             _db.SaveChanges();
         }
 
+        #endregion
+
+
+        #region Delete-методы для удаления объектов из БД
+
         public void DeleteCurrency(int currencyId)
         {
             var currency = _db.TableCurrencies.Single(currency => currency.ID == currencyId);
@@ -109,6 +128,12 @@ namespace database.context.Repos
             _db.TableBotTypes.Remove(botType);
             _db.SaveChanges();
         }
+
+        #endregion
+
+
+        #region Проверка существования объектов в БД
+
         public bool IsCurrencyExists(int currencyId) => _db.TableCurrencies
             .Any(currency => currency.ID == currencyId);
 
@@ -120,6 +145,9 @@ namespace database.context.Repos
 
         public bool IsBotTypeExists(int botTypeId) => _db.TableBotTypes
             .Any(botType => botType.ID == botTypeId);
+
+        #endregion
+
 
     }
 }
