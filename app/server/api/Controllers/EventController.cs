@@ -1,68 +1,85 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using database.context.Repos;
-using misc.security;
-using Microsoft.Net.Http.Headers;
-using api.Misc;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using database.context.Models.Events.Flip;
+using database.context.Models.Events.Main;
+using database.context.Models.Events.Pay;
+using database.context.Models.Events.Sell;
+using database.context.Repos.Event;
 
 namespace api.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class EventController : ControllerBase
     {
         private readonly IEventRepos _eventRepos;
+
         public EventController(IEventRepos db) => _eventRepos = db;
-        
+
+
+
+        #region GET
+
+        [ProducesResponseType(typeof(IEnumerable<HistoryMainEventModel>), 200)]
         [HttpGet("MainEvents/Get")]
         public IActionResult GetMainEventList()
         {
             var mainEvents = _eventRepos.GetMainEvents();
             if (!mainEvents.Any())
                 return StatusCode(404, new { status = "Данные были не найдены" });
-            return StatusCode(200, new { status = "СОбытия были найдены", data = mainEvents });
+
+            return StatusCode(200, new { status = "События были найдены", data = mainEvents });
         }
 
+        [ProducesResponseType(typeof(IEnumerable<HistoryFlipEventModel>), 200)]
         [HttpGet("FlipEvents/Get")]
         public IActionResult GetFlipEventList()
         {
             var flipEvents = _eventRepos.GetFlipEvents();
             if (!flipEvents.Any())
                 return StatusCode(404, new { status = "Данные были не найдены" });
-            return StatusCode(200, new { status = "СОбытия были найдены", data = flipEvents });
+
+            return StatusCode(200, new { status = "События были найдены", data = flipEvents });
         }
 
+        [ProducesResponseType(typeof(IEnumerable<HistoryPayEventModel>), 200)]
         [HttpGet("PayEvents/Get")]
         public IActionResult GetPayEventList()
         {
             var events = _eventRepos.GetPayEvents();
             if (!events.Any())
                 return StatusCode(404, new { status = "Данные были не найдены" });
-            return StatusCode(200, new { status = "СОбытия были найдены", data = events });
+
+            return StatusCode(200, new { status = "События были найдены", data = events });
         }
 
+        [ProducesResponseType(typeof(IEnumerable<HistorySellEventModel>), 200)]
         [HttpGet("SellEvents/Get")]
         public IActionResult GetSellEventList()
         {
             var events = _eventRepos.GetSellEvents();
             if (!events.Any())
                 return StatusCode(404, new { status = "Данные были не найдены" });
+
             return StatusCode(200, new { status = "События были найдены", data = events });
         }
 
+        [ProducesResponseType(typeof(IEnumerable<HistoryMainEventModel>), 200)]
         [HttpGet("Account/acc_id={acc_id:int}/MainEvents/Get")]
         public IActionResult GetMainEventList(int acc_id)
         {
             if (!_eventRepos.IsAccountIdExists(acc_id))
                 return StatusCode(404, new { status = "Аккаунта не сущетсвует" });
+
             var events = _eventRepos.GetMainEvents(acc_id);
             if(!events.Any())
                 return StatusCode(404, new { status = "Данные были не найдены" });
+
             return StatusCode(200, new { status = "События были найдены", data = events });
         }
 
+        [ProducesResponseType(typeof(IEnumerable<HistoryFlipEventModel>), 200)]
         [HttpGet("Account/acc_id={acc_id:int}/FlipEvents/Get")]
         public IActionResult GetFlipEventList(int acc_id)
         {
@@ -74,6 +91,7 @@ namespace api.Controllers
             return StatusCode(200, new { status = "События были найдены", data = events });
         }
 
+        [ProducesResponseType(typeof(IEnumerable<HistorySellEventModel>), 200)]
         [HttpGet("Account/acc_id={acc_id:int}/SellEvents/Get")]
         public IActionResult GetSellEventList(int acc_id)
         {
@@ -85,15 +103,22 @@ namespace api.Controllers
             return StatusCode(200, new { status = "События были найдены", data = events });
         }
 
+        #endregion
 
-        [HttpPost("MainEvents/Add/op_id={op_id:int}&acc_id={acc_id:int}&value={value:decimal}&date={date:datetime}&hold_interest={hold_interest:boolean}&link={link}")]
-        public IActionResult AddEvent(int op_id, int acc_id, decimal value, DateTime date, bool hold_interest, string? link)
+
+
+        #region POST
+
+        [HttpPost("MainEvents/Add/op_id={op_id:int}&acc_id={acc_id:int}&value={value:decimal}&date={date:datetime}&hold_interest={hold_interest:int}&link={link}")]
+        public IActionResult AddEvent(int op_id, int acc_id, decimal value, DateTime date, int hold_interest, string? link)
         {
             if (!_eventRepos.IsAccountIdExists(acc_id))
                 return StatusCode(404, new { status = "Аккаунта не существует" });
+
             if (!_eventRepos.IsOperationExists(op_id))
                 return StatusCode(404, new { status = "Операции не существует" });
-            _eventRepos.AddMainEvent(op_id,value,date,acc_id,hold_interest,link);
+
+            _eventRepos.AddMainEvent(op_id,value,date,acc_id,Convert.ToBoolean(hold_interest),link);
             return StatusCode(200, new { status = "Событие по внесению/выводу средств было успешно добавлено" });
         }
 
@@ -108,8 +133,8 @@ namespace api.Controllers
                 return StatusCode(404, new { status = "Операции не существует" });
             if (!_eventRepos.IsFundIdExists(fund_id))
                 return StatusCode(404, new { status = "Тип средств не существует" });
+
             _eventRepos.AddFlipEvent(op_id, value, date, acc_from, acc_to, fund_id);
-            
             return StatusCode(200, new { status = "Событие о переносе средств было успешно добавлено" });
         }
 
@@ -118,6 +143,7 @@ namespace api.Controllers
         {
             if (!_eventRepos.IsOperationExists(op_id))
                 return StatusCode(404, new { status = "Операции не существует" });
+
             _eventRepos.AddPayEvent(op_id, value, date, link);
             return StatusCode(200, new { status = "Событие о переводе зарплаты сотруднику было добавлено" });
         }
@@ -131,18 +157,26 @@ namespace api.Controllers
                 return StatusCode(404, new { status = "Операции не существует" });
             if (!_eventRepos.IsBotTypeExists(bot_type))
                 return StatusCode(404, new { status = "Тип бота не найден" });
+
             _eventRepos.AddSellEvent(op_id, value, date, acc_id, bot_type);
             return StatusCode(200, new { status = "Событие о продаже бота было добавлено" });
         }
 
-        [HttpPut("MainEvents/Update/event_id={event_id:int}&acc_id={acc_id:int}&hold_interest={hold_interest:boolean}&link={link}")]
-        public IActionResult UpdateMainEvent(int event_id, int acc_id, bool hold_interest, string link)
+        #endregion
+
+
+
+        #region PUT
+
+        [HttpPut("MainEvents/Update/event_id={event_id:int}&acc_id={acc_id:int}&hold_interest={hold_interest:int}&link={link}")]
+        public IActionResult UpdateMainEvent(int event_id, int acc_id, int hold_interest, string link)
         {
             if (!_eventRepos.IsAccountIdExists(acc_id))
                 return StatusCode(404, new { status = "Аккаунта не существует" });
             if (!_eventRepos.IsEventExists(event_id))
                 return StatusCode(404, new { status = "Событие не найдено" });
-            _eventRepos.UpdateMainEvent(event_id,acc_id,hold_interest,link);
+
+            _eventRepos.UpdateMainEvent(event_id,acc_id, Convert.ToBoolean(hold_interest), link);
             return StatusCode(200, new { status = "Событие было обновлено" });
         }
 
@@ -157,6 +191,7 @@ namespace api.Controllers
                 return StatusCode(404, new { status = "Аккаунта Y не существует" });
             if (!_eventRepos.IsFundIdExists(fund_id))
                 return StatusCode(404, new { status = "Тип средств не существует" });
+
             _eventRepos.UpdateFlipEvent(event_id, acc_from, acc_to, fund_id);
             return StatusCode(200, new { status = "Событие было обновлено" });
         }
@@ -166,6 +201,7 @@ namespace api.Controllers
         {
             if (!_eventRepos.IsEventExists(event_id))
                 return StatusCode(404, new { status = "Событие не найдено" });
+
             _eventRepos.UpdatePayEvent(event_id,link);
             return StatusCode(200, new { status = "Собыьте было обновлено" });
         }
@@ -179,15 +215,23 @@ namespace api.Controllers
                 return StatusCode(404, new { status = "Аккаунта не существует" });
             if (!_eventRepos.IsBotTypeExists(bot_type))
                 return StatusCode(404, new { status = "Тип бота не найден" });
+
             _eventRepos.UpdateSellEvent(event_id, acc_id, bot_type);
             return StatusCode(200, new { status = "Событие было обновлено" });
         }
+
+        #endregion
+
+
+
+        #region DELETE
 
         [HttpDelete("MainEvents/Delete/event_id={event_id:int}")]
         public IActionResult DeleteMainEvent(int event_id)
         {
             if (!_eventRepos.IsEventExists(event_id))
                 return StatusCode(404, new { status = "Событие не найдено" });
+
             _eventRepos.DeleteMainEvent(event_id);
             return StatusCode(200, new { status = "Событие было удалено" });
         }
@@ -197,6 +241,7 @@ namespace api.Controllers
         {
             if (!_eventRepos.IsEventExists(event_id))
                 return StatusCode(404, new { status = "Событие не найдено" });
+
             _eventRepos.DeleteFlipEvent(event_id);  
             return StatusCode(200, new { status = "Событие было удалено" });
         }
@@ -206,6 +251,7 @@ namespace api.Controllers
         {
             if (!_eventRepos.IsEventExists(event_id))
                 return StatusCode(404, new { status = "Событие не найдено" });
+
             _eventRepos.DeletePayEvent(event_id);
             return StatusCode(200, new { status = "Событие было удалено" });
         }
@@ -215,8 +261,14 @@ namespace api.Controllers
         {
             if (!_eventRepos.IsEventExists(event_id))
                 return StatusCode(404, new { status = "Событие не найдено" });
+
             _eventRepos.DeleteSellEvent(event_id);
             return StatusCode(200, new { status = "Событие было удалено" });
         }
+
+        #endregion
+
+
+
     }
 }

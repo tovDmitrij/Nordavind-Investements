@@ -1,6 +1,6 @@
 ﻿using database.context.Models;
 using misc.security;
-namespace database.context.Repos
+namespace database.context.Repos.User
 {
     public sealed class UserRepos : IUserRepos
     {
@@ -17,13 +17,13 @@ namespace database.context.Repos
         public void Add(string email, string password)
         {
             _db.TableUsers.Add(new(
-                email, 
-                Security.HashPassword(email,password)));
+                email,
+                Security.HashPassword(email, password)));
             _db.SaveChanges();
         }
 
         public UserModel? GetUserInfo(string email, string password) => _db.TableUsers
-            .FirstOrDefault(u => 
+            .FirstOrDefault(u =>
                 u.Email == email && u.Password == Security.HashPassword(email, password));
     }
 }

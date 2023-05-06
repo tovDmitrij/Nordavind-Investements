@@ -4,7 +4,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using api.Misc;
 using api.Middlewares;
 using database.context;
-using database.context.Repos;
+using database.context.Repos.User;
+using database.context.Repos.Directory;
 namespace api
 {
     public class Program

@@ -2,7 +2,7 @@
 using Npgsql.PostgresTypes;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-namespace database.context.Models.Events
+namespace database.context.Models.Events.Flip
 {
     [Keyless]
     [Table("view_history_flip_events")]
@@ -36,7 +36,7 @@ namespace database.context.Models.Events
         [Column("A/C Y")]
         public int AccountTo { get; set; }
 
-        public HistoryFlipEventModel(int event_id, DateTime date, int op_id, string op_title,decimal value,int account_from, int account_to)
+        public HistoryFlipEventModel(int event_id, DateTime date, int op_id, string op_title, decimal value, int account_from, int account_to)
         {
             ID = event_id;
             Date = date;
@@ -48,6 +48,6 @@ namespace database.context.Models.Events
         }
 
         public HistoryFlipEventModel() { }
-       
+
     }
 }

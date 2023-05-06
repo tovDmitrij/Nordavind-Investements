@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace database.context.Models.Events
+namespace database.context.Models.Events.Main
 {
     [Keyless]
     [Table("view_history_main_events")]
@@ -32,7 +32,7 @@ namespace database.context.Models.Events
         [Column("A/C No")]
         public int AccountId { get; set; }
 
-        public HistoryMainEventModel(int event_id,string investor,DateTime date,string op_title,decimal value,int accountId)
+        public HistoryMainEventModel(int event_id, string investor, DateTime date, string op_title, decimal value, int accountId)
         {
             ID = event_id;
             Investor = investor;
@@ -43,6 +43,6 @@ namespace database.context.Models.Events
         }
 
         public HistoryMainEventModel() { }
-    
+
     }
 }

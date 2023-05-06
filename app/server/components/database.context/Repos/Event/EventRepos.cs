@@ -1,11 +1,14 @@
 ﻿using database.context.Models.Data;
-using database.context.Models.Events;
+using database.context.Models.Events.Flip;
+using database.context.Models.Events.Main;
+using database.context.Models.Events.Pay;
+using database.context.Models.Events.Sell;
 using Microsoft.Extensions.Logging;
 using misc.security;
 using System.Security.AccessControl;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace database.context.Repos
+namespace database.context.Repos.Event
 {
     public sealed class EventRepos : IEventRepos
     {
@@ -13,38 +16,38 @@ namespace database.context.Repos
         private readonly DataContext _db;
 
         public EventRepos(DataContext db) => _db = db;
-        
+
         private void AddEvent(int operation_type, decimal value, string description, DateTime date)
         {
-            _db.TableEvents.Add(new (operation_type, value, description, date) );
+            _db.TableEvents.Add(new(operation_type, value, description, date));
             _db.SaveChanges();
         }
 
         public void AddFlipEvent(int operationId, decimal value, DateTime date, int account_from, int account_to, int fund_type)
         {
             AddEvent(operationId, value, string.Empty, date);
-            _db.TableFlipEvents.Add(new (account_from, account_to, fund_type));
+            _db.TableFlipEvents.Add(new(account_from, account_to, fund_type));
             _db.SaveChanges();
         }
 
-        public void AddMainEvent(int operationId,decimal value, DateTime date,int accountId, bool hold_interest, string link)
+        public void AddMainEvent(int operationId, decimal value, DateTime date, int accountId, bool hold_interest, string link)
         {
             AddEvent(operationId, value, string.Empty, date);
-            _db.TableMainEvents.Add(new (accountId, hold_interest, link));
+            _db.TableMainEvents.Add(new(accountId, hold_interest, link));
             _db.SaveChanges();
         }
 
         public void AddPayEvent(int operationId, decimal value, DateTime date, string link)
         {
             AddEvent(operationId, value, string.Empty, date);
-            _db.TablePayEvents.Add(new (link));
+            _db.TablePayEvents.Add(new(link));
             _db.SaveChanges();
         }
 
-        public void AddSellEvent(int operationId, decimal value, DateTime date,int accountId, int botType)
+        public void AddSellEvent(int operationId, decimal value, DateTime date, int accountId, int botType)
         {
             AddEvent(operationId, value, string.Empty, date);
-            _db.TableSellEvents.Add(new (accountId, botType));
+            _db.TableSellEvents.Add(new(accountId, botType));
             _db.SaveChanges();
         }
 
@@ -102,7 +105,7 @@ namespace database.context.Repos
 
         public void UpdateFlipEvent(int flipEventId, int account_from, int account_to, int fund_type)
         {
-            var e = _db.TableFlipEvents.Single(e => e.ID == flipEventId) ;
+            var e = _db.TableFlipEvents.Single(e => e.ID == flipEventId);
             e.AccountFrom = account_from;
             e.AccountTo = account_to;
             e.FundType = fund_type;
@@ -145,7 +148,7 @@ namespace database.context.Repos
         public IEnumerable<HistorySellEventModel> GetSellEvents() => _db.TableHistorySellEvents.ToList();
 
         public IEnumerable<HistoryMainEventModel> GetMainEvents(int acc_id) => _db.TableHistoryMainEvents
-            .Where(e=>e.AccountId == acc_id).ToList();
+            .Where(e => e.AccountId == acc_id).ToList();
 
         public IEnumerable<HistoryFlipEventModel> GetFlipEvents(int acc_id) => _db.TableHistoryFlipEvents
             .Where(e => e.AccountFrom == acc_id || e.AccountTo == acc_id).ToList();

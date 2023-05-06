@@ -1,5 +1,6 @@
 ﻿using database.context.Models;
-namespace database.context.Repos
+
+namespace database.context.Repos.User
 {
     /// <summary>
     /// Взаимодействие с таблицей пользователей в базе данных

@@ -1,6 +1,9 @@
-﻿using database.context.Models.Events;
+﻿using database.context.Models.Events.Flip;
+using database.context.Models.Events.Main;
+using database.context.Models.Events.Pay;
+using database.context.Models.Events.Sell;
 
-namespace database.context.Repos
+namespace database.context.Repos.Event
 {
     public interface IEventRepos
     {
@@ -20,7 +23,7 @@ namespace database.context.Repos
 
         public IEnumerable<HistorySellEventModel> GetSellEvents(int acc_id);
 
-        public void AddMainEvent(int operationId,decimal value,DateTime date, int accountId, bool hold_interest, string link);
+        public void AddMainEvent(int operationId, decimal value, DateTime date, int accountId, bool hold_interest, string link);
 
         public void AddFlipEvent(int operationId, decimal value, DateTime date, int account_from, int account_to, int fund_type);
 

@@ -1,7 +1,7 @@
 ﻿using database.context.Models.Data;
 using misc.security;
 
-namespace database.context.Repos
+namespace database.context.Repos.Directory
 {
     public sealed class DirectoryRepos : IDirectoryRepos
     {

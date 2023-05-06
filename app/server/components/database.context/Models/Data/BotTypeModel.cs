@@ -3,9 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace database.context.Models.Data
 {
-    /// <summary>
-    /// Базовая информация о пользователе в системе
-    /// </summary>
     [Table("trade_bots")]
     public sealed class BotTypeModel
     {
