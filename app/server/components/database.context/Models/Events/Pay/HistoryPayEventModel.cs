@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Npgsql.PostgresTypes;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace database.context.Models.Events.Pay
@@ -43,6 +42,5 @@ namespace database.context.Models.Events.Pay
         }
 
         public HistoryPayEventModel() { }
-
     }
 }
