@@ -3,9 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace database.context.Models.Events.Main
 {
-    /// <summary>
-    /// Базовая информация о пользователе в системе
-    /// </summary>
     [Table("main_events")]
     public sealed class MainEventModel
     {

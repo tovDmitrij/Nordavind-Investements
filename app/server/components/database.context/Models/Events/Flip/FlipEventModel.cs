@@ -1,11 +1,7 @@
-﻿using Npgsql.PostgresTypes;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace database.context.Models.Events.Flip
 {
-    /// <summary>
-    /// Базовая информация о пользователе в системе
-    /// </summary>
     [Table("flip_events")]
     public sealed class FlipEventModel
     {
