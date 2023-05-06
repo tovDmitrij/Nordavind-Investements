@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using api.Misc;
 using api.Middlewares;
 using database.context;
-using database.context.Repos.Directory;
 using database.context.Repos.User;
+using database.context.Repos.Directory;
 using database.context.Repos.Event;
 namespace api
 {

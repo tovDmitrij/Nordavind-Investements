@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using database.context.Models.Data;
 using database.context.Repos.Directory;
 namespace api.Controllers
 {
@@ -8,165 +9,209 @@ namespace api.Controllers
     [Route("api/[controller]")]
     public class DirectoryController : ControllerBase
     {
-        private readonly IDirectoryRepos _directory;
+        private readonly IDirectoryRepos _directoryRepos;
 
-        public DirectoryController(IDirectoryRepos db) => _directory = db;
+        public DirectoryController(IDirectoryRepos db) => _directoryRepos = db;
 
 
+
+        #region GET
+
+        [ProducesResponseType(typeof(IEnumerable<CurrencyModel>), 200)]
         [HttpGet("Сurrencies/Get")]
-        public IActionResult Currencies() 
+        public IActionResult GetCurrencies() 
         {
-            var currencies = _directory.GetCurrencies();
+            var currencies = _directoryRepos.GetCurrencies();
             if (!currencies.Any())
-                return StatusCode(404, new { status = "Список пуст" });
-            return StatusCode(200, new {status="Список был успешно сформирован", 
-                data=currencies });
+                return StatusCode(404, new { status = "Данные были не найдены" });
+
+            return StatusCode(200, new { status = "Список был успешно сформирован", data = currencies });
         }
 
+        [ProducesResponseType(typeof(IEnumerable<AccountTypeModel>), 200)]
         [HttpGet("AccountTypes/Get")]
-        public IActionResult AccountTypes() 
+        public IActionResult GetAccountTypes() 
         {
-            var accountTypes = _directory.GetAccountTypes();
+            var accountTypes = _directoryRepos.GetAccountTypes();
             if (!accountTypes.Any())
-                return StatusCode(404, new { status = "Список пуст" });
-            return StatusCode(200, new { status = "Списик был успешно сформирован", 
-                data = accountTypes});
+                return StatusCode(404, new { status = "Данные были не найдены" });
+
+            return StatusCode(200, new { status = "Списик был успешно сформирован", data = accountTypes});
         }
 
+        [ProducesResponseType(typeof(IEnumerable<BotTypeModel>), 200)]
         [HttpGet("BotTypes/Get")]    
-        public IActionResult BotTypes() 
+        public IActionResult GetBotTypes() 
         {
-            var botTypes = _directory.GetBotTypes();
+            var botTypes = _directoryRepos.GetBotTypes();
             if (!botTypes.Any())
-                return StatusCode(404, new { status = "Список пуст" });
-            return StatusCode(200, new { status = "Список был успешно сформирован", 
-                data=botTypes});
+                return StatusCode(404, new { status = "Данные были не найдены" });
+
+            return StatusCode(200, new { status = "Список был успешно сформирован", data = botTypes });
         }
 
+        [ProducesResponseType(typeof(IEnumerable<ConditionModel>), 200)]
         [HttpGet("Conditions/Get")]
-        public IActionResult Conditions() 
+        public IActionResult GetConditions() 
         {
-            var conditions = _directory.GetConditions();
+            var conditions = _directoryRepos.GetConditions();
             if (!conditions.Any())
-                return StatusCode(404, new { status = "Список пуст" });
-            return StatusCode(200, new {status="Список был успешно сформирован",
-                data=conditions});
+                return StatusCode(404, new { status = "Данные были не найдены" });
+
+            return StatusCode(200, new { status = "Список был успешно сформирован", data = conditions });
         }
 
+        [ProducesResponseType(typeof(IEnumerable<OperationModel>), 200)]
         [HttpGet("Operations/Get")]
-        public IActionResult Operations()
+        public IActionResult GetOperations()
         {
-            var operations = _directory.GetOperations();
+            var operations = _directoryRepos.GetOperations();
             if (!operations.Any())
-                return StatusCode(404, new { status = "Список пуст" });
-            return StatusCode(200, new { status = "Список был успешно сформирован", data=operations});
+                return StatusCode(404, new { status = "Данные были не найдены" });
+
+            return StatusCode(200, new { status = "Список был успешно сформирован", data = operations });
         }
 
+        [ProducesResponseType(typeof(IEnumerable<FundModel>), 200)]
         [HttpGet("Funds/Get")]
-        public IActionResult Funds()
+        public IActionResult GetFunds()
         {
-            var funds = _directory.GetFunds();
+            var funds = _directoryRepos.GetFunds();
             if (!funds.Any())
-                return StatusCode(404, new { status = "Список пуст" });
-            return StatusCode(200, new { status = "Списк был успешно сформирован", data = funds });
+                return StatusCode(404, new { status = "Данные были не найдены" });
+
+            return StatusCode(200, new { status = "Список был успешно сформирован", data = funds });
         }
+
+        #endregion
+
+
+
+        #region POST
 
         [HttpPost("Currencies/Add/title={title}&short_title={short_title}")]
-        public IActionResult Currencies(string title, string short_title) 
+        public IActionResult AddCurrency(string title, string short_title) 
         {
-            _directory.AddCurrency( new (title, short_title) );
+            _directoryRepos.AddCurrency( new (title, short_title) );
             return StatusCode(200, new { status = "Валюта была успешно добавлена" });
         }
 
         [HttpPost("AccountTypes/Add/title={title}&description={description}")]
-        public IActionResult AccountTypes(string title, string description)
+        public IActionResult AddAccountType(string title, string description)
         {
-            _directory.AddAccountType(new (title, description) );
+            _directoryRepos.AddAccountType(new (title, description) );
             return StatusCode(200, new { status = "Новый тип счёта был успешно добавлен" });
         }
 
         [HttpPost("BotTypes/Add/title={title}&description={description}")]
-        public IActionResult BotTypes(string title, string description) 
+        public IActionResult AddBotType(string title, string description) 
         {
-            _directory.AddBotType(new(title, description));
+            _directoryRepos.AddBotType(new(title, description));
             return StatusCode(200, new { status = "Новый тип бота был успешно добавлен" });
         }
 
         [HttpPost("Conditions/Add/title={title}&value={value}&description={description}")]
-        public IActionResult Conditions(string title, decimal value, string description) 
+        public IActionResult AddCondition(string title, decimal value, string description) 
         {
-            _directory.AddCondition(new(title, value, description));
+            _directoryRepos.AddCondition(new(title, value, description));
             return StatusCode(200, new { status = "Новые условия были успешно добавлены" });
         }
 
+        #endregion
+
+
+
+        #region PUT
+
         [HttpPut("Currencies/Update/id={id}&title={title}&short_title={short_title}")]
-        public IActionResult Currencies(int id, string title, string short_title)
+        public IActionResult UpdateCurrency(int id, string title, string short_title)
         {
-            if (!_directory.IsCurrencyExists(id))
+            if (!_directoryRepos.IsCurrencyExists(id))
                 return StatusCode(404, new { status = "Данной валюты не существует" });
-            _directory.UpdateCurrency(id, title, short_title);
+
+            _directoryRepos.UpdateCurrency(id, title, short_title);
             return StatusCode(200, new { status = "Валюта была успешно обновлена" });
         }
 
         [HttpPut("Conditions/Update/id={id}&title={title}&value={value}&description={description}")]
-        public IActionResult Conditions(int id, string title, decimal value, string description)
+        public IActionResult UpdateCondition(int id, string title, decimal value, string description)
         {
-            if (!_directory.IsConditionExists(id))
+            if (!_directoryRepos.IsConditionExists(id))
                 return StatusCode(404, new { status = "Данного условия не существует" });
-            _directory.UpdateCondition(id, title, value, description);
+
+            _directoryRepos.UpdateCondition(id, title, value, description);
             return StatusCode(200, new { status = "Условие было успешно обновлено" });
         }
 
         [HttpPut("AccountTypes/Update/id={id}&title={title}&description={description}")]
-        public IActionResult AccountTypes(int id, string title, string description)
+        public IActionResult UpdateAccountType(int id, string title, string description)
         {
-            if (!_directory.IsAccountTypeExists(id))
+            if (!_directoryRepos.IsAccountTypeExists(id))
                 return StatusCode(404, new { status = "Данного типа аккаунта не существует" });
-            _directory.UpdateAccountType(id, title, description);
+
+            _directoryRepos.UpdateAccountType(id, title, description);
             return StatusCode(200, new { status = "Тип аккаунта успешно обновлён" });
         }
 
         [HttpPut("BotTypes/Update/id={id}&title={title}&description={description}")]
-        public IActionResult BotTypes(int id, string title, string description)
+        public IActionResult UpdateBotType(int id, string title, string description)
         {
-            if (!_directory.IsBotTypeExists(id))
+            if (!_directoryRepos.IsBotTypeExists(id))
                 return StatusCode(404, new { status = "Данного типа бота не сущетсвует" });
-            _directory.UpdateBotType(id, title, description);
+
+            _directoryRepos.UpdateBotType(id, title, description);
             return StatusCode(200, new { status = "Бот был успешно обновлён" });
         }
 
+        #endregion
+
+
+
+        #region DELETE
+
         [HttpDelete("Currencies/Delete/id={id}")]
-        public IActionResult Currencies(int id)
+        public IActionResult DeleteCurrency(int id)
         {
-            if (!_directory.IsCurrencyExists(id))
+            if (!_directoryRepos.IsCurrencyExists(id))
                 return StatusCode(404, new { status = "Данной валюты не сущетсвует" });
-            _directory.DeleteCurrency(id);
+
+            _directoryRepos.DeleteCurrency(id);
             return StatusCode(200, new { status = "Валюта была успешно удалена" });
         }
 
         [HttpDelete("Conditions/Delete/id={id}")]
-        public IActionResult Condition(int id)
+        public IActionResult DeleteCondition(int id)
         {
-            if (!_directory.IsConditionExists(id))
+            if (!_directoryRepos.IsConditionExists(id))
                 return StatusCode(404, new { status = "Данного условия не существует" });
-            _directory.DeleteCondition(id);
+
+            _directoryRepos.DeleteCondition(id);
             return StatusCode(200, new { status = "Условие было успешно удалено" });
         }
 
         [HttpDelete("AccountTypes/Delete/id={id}")]
-        public IActionResult AccountTypes(int id)
+        public IActionResult DeleteAccountType(int id)
         {
-            if (!_directory.IsAccountTypeExists(id))
+            if (!_directoryRepos.IsAccountTypeExists(id))
                 return StatusCode(404, new { status = "Данного типа аккаунта не существует" });
+
+            _directoryRepos.DeleteAccountType(id);
             return StatusCode(200, new { status = "Тип аккаунта был удалён" });
         }
 
         [HttpDelete("BotTypes/Delete/id={id}")]
-        public IActionResult BotTypes(int id)
+        public IActionResult DeleteBotType(int id)
         {
-            if (!_directory.IsBotTypeExists(id))
+            if (!_directoryRepos.IsBotTypeExists(id))
                 return StatusCode(404, new { status = "Данного типа бота не сущетсвует" });
+
+            _directoryRepos.DeleteBotType(id);
             return StatusCode(200, new { status = "Тип бота был успешно удалён" });
         }
+
+        #endregion
+
+
+
     }
 }

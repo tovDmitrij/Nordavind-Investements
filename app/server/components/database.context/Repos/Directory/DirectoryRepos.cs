@@ -33,7 +33,7 @@ namespace database.context.Repos.Directory
             _db.SaveChanges();
         }
 
-        public IEnumerable<CurrencyModel> GetCurrencies() => _db.TableCurrencies.Select(x => x);
+        public IEnumerable<CurrencyModel> GetCurrencies() => _db.TableCurrencies.ToList();
 
         public IEnumerable<ConditionModel> GetConditions() => _db.TableConditions.ToList();
 

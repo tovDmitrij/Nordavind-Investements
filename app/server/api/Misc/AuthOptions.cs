@@ -22,7 +22,6 @@ namespace api.Misc
         /// </summary>
         private const string KEY = "mysupersecret_secretkey!123";
 
-        public static SymmetricSecurityKey GetSymmetricSecurityKey() =>
-            new(Encoding.UTF8.GetBytes(KEY));
+        public static SymmetricSecurityKey GetSymmetricSecurityKey() => new(Encoding.UTF8.GetBytes(KEY));
     }
 }

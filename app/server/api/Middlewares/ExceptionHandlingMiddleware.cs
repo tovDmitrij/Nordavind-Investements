@@ -22,8 +22,13 @@ namespace api.Middlewares
             catch (Exception ex)
             {
                 await context.Response.WriteAsJsonAsync(new { statusCode = 500, status = "Произошла непредвиденная ошибка. Повторите позже" });
-
-                var factory = new ConnectionFactory() { HostName = "localhost" };
+                //await context.Response.WriteAsJsonAsync(new { statusCode = 500, status = ex.Message });
+                
+                /* TODO
+                 * Сделать добавление логов в БД
+                 */
+                 
+               /* var factory = new ConnectionFactory() { HostName = "localhost" };
                 using (var connection = factory.CreateConnection())
                 {
                     using (var channel = connection.CreateModel())
@@ -39,7 +44,7 @@ namespace api.Middlewares
                             basicProperties: null,
                             body: Encoding.UTF8.GetBytes(JsonSerializer.Serialize<LogModel>(new(ex.Message, ex.Source, ex.StackTrace))));
                     }
-                }
+                }*/
             }
         }
     }

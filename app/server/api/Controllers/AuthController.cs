@@ -10,9 +10,9 @@ namespace api.Controllers
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
-        private readonly IUserRepos _user;
+        private readonly IUserRepos _userRepos;
 
-        public AuthController(IUserRepos db) => _user = db;
+        public AuthController(IUserRepos db) => _userRepos = db;
 
         /// <summary>
         /// Регистрация нового пользователя в системе
@@ -22,13 +22,13 @@ namespace api.Controllers
         [HttpPost("SignUp/email={email}&password={password}")]
         public IActionResult SignUp(string email, string password)
         {
-            switch (_user.IsEmailBusy(email))
+            switch (_userRepos.IsEmailBusy(email))
             {
                 case true:
                     return StatusCode(406, new { status = "Почта уже занята другим пользователем" });
 
                 case false:
-                    _user.Add(email, password);
+                    _userRepos.Add(email, password);
                     return StatusCode(200, new { status = "Пользователь успешно зарегистрирован" });
             }
         }
@@ -38,14 +38,13 @@ namespace api.Controllers
         /// </summary>
         /// <param name="email">Почта пользователя</param>
         /// <param name="password">Пароль пользоватея</param>
+        [ProducesResponseType(typeof(Status), 200)]
         [HttpPost("SignIn/email={email}&password={password}")]
         public IActionResult SignIn(string email, string password)
         {
-            switch (_user.IsUserExist(email, password))
+            switch (_userRepos.IsUserExist(email, password))
             {
                 case true:
-                    var userInfo = _user.GetUserInfo(email, password);
-
                     JwtSecurityToken token = new(
                         issuer: AuthOptions.ISSUER,
                         audience: AuthOptions.AUDIENCE,
@@ -55,15 +54,15 @@ namespace api.Controllers
                         expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(30)),
                         signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha512));
 
-                    return StatusCode(200, new 
-                        { 
+                    return StatusCode(200, new { 
                             status = "Пользователь успешно найден",
-                            token = new JwtSecurityTokenHandler().WriteToken(token)
-                        });
+                            token = new JwtSecurityTokenHandler().WriteToken(token)});
 
                 case false:
                     return StatusCode(404, new { status = "Пользователя с такой почтой и паролем не существует" });
             }
         }
+
+        private record Status(string token);
     }
 }
