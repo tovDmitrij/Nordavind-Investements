@@ -8,16 +8,16 @@ npm install
 npm start
 ```
 ### ===Сервер===
-Нужен Asp.Net Core 7
+Нужен установленный Asp.Net Core 7 на ПК
 ```
 cd app/server
 ```
-Запустить решение app.sln
+Запустить решение app.sln (пакеты NuGet сами подтянутся)
 
 
 ### ===БД===
 
-Нужен PostgreSQL 15 и pgAdmin4
+Нужен PostgreSQL 15 и pgAdmin4 (https://www.enterprisedb.com/downloads/postgres-postgresql-downloads)
 
 Для реализации БД необходимо её создать с наименованием *nordavind_investements*, а после загрузить скрипты *create.sql* и *insert.sql*, находящиеся в *app/server/database/scripts/nordavind_investements*.
 
