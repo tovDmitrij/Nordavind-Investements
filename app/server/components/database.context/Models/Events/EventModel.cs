@@ -38,5 +38,7 @@ namespace database.context.Models.Events
             Description = description;
             Date = date;
         }
+
+        public EventModel() { }
     }
 }
