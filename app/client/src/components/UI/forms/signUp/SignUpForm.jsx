@@ -24,6 +24,7 @@ export const SignUpForm = ({accept, error}) => {
         const emailMatch = email.match(emailRegex)
         if (emailMatch == null){
             error("Почта не валидная")
+            return false
         }
 
         const passRegex = /[\S+]{8,16}/g
@@ -31,9 +32,11 @@ export const SignUpForm = ({accept, error}) => {
         const repPassMatch = repeatedPass.match(passRegex)
         if (passMatch == null || repPassMatch == null){
             error("Пароль не валидный")
+            return false
         }
         if (password !== repeatedPass){
             error('Пароли не совпадают')
+            return false
         }
 
         const userInfo = {

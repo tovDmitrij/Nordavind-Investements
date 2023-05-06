@@ -23,12 +23,14 @@ export const SignInForm = ({accept, error}) => {
         const emailMatch = email.match(emailRegex)
         if (emailMatch == null){
             error("Почта не валидная")
+            return false
         }
 
         const passRegex = /[\S+]{8,16}/g
         const passMatch = password.match(passRegex)
         if (passMatch == null){
             error("Пароль не валидный")
+            return false
         }
 
         const userInfo = {

@@ -1,7 +1,6 @@
 import React from "react";
-import MyButton from '../../button/MyButton'
-import { useFetching } from "../../../hooks/useFetching";
-import {MyModal} from "../../MyModal/MyModal"
+import MyButton from '../../.././button/MyButton'
+import { useFetching } from "../../../../hooks/useFetching"
 import { useState } from "react"
 export const PayEventTable= ({events})=>{
     const [DeleteEvent, isDeleteLoading, deleteError] = useFetching(async (event_id) => {

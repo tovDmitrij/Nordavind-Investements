@@ -1,35 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import { useFetching } from '../../components/hooks/useFetching'
-import { MainEventTable } from '../../components/UI/tables/mainEvents/mainEventTable'
 import { Loader } from '../../components/UI/loader/Loader'
 import { ErrorPanel } from '../../components/UI/error/ErrorPanel'
+import { MainEventTable } from '../../components/UI/tables/eventTables/mainEvents/mainEventTable'
+import { PayEventTable } from '../../components/UI/tables/eventTables/payEvents/payEventTable'
+import { FlipEventTable } from '../../components/UI/tables/eventTables/flipEvents/flipEventTable';
+import { SellEventTable } from '../../components/UI/tables/eventTables/sellEvents/sellEventsTable';
 import classes from './EventsPage.module.css'
-import {PayEventTable} from '../../components/UI/tables/payEvents/payEventTable'
-import MyModal from "../../components/UI/MyModal/MyModal"
-import MyButton from '../../components/UI/button/MyButton'
-import {FlipEventTable} from '../../components/UI/tables/flipEvents/flipEvents';
-import {sellEventsTable} from '../../components/UI/tables/sellEvents/sellEventsTable';
 
 
 export const EventsPage = () => {
     const [responseError, setError] = useState('')
     const [mainEvents, setMainEvents] = useState([])
     const [payEvents,setPayEvent]=useState([])
-    const [modal, setModal]=useState(false)
     const [events,setFlipEvents]= useState([]);
     const [sellEvents,setSellEvents]= useState([]);
-   //-----------------------------------
-    const openModal = () => {
-        setModal(true);
-      };
-    
-      const closeModal = () => {
-        setModal(false);
-      };
-    //-------------------------------------
 
 
-    const [MainList, isMainLoading, error] = useFetching(async () => {
+    const [MainList, isMainLoading, mainError] = useFetching(async () => {
         setMainEvents([{
             event_id: 1,
             date: "2022-01-01",
@@ -69,7 +57,6 @@ export const EventsPage = () => {
 
     })
 
-
     const [FlipList, isFlipLoading ] = useFetching( async () => {
         setFlipEvents([
             {
@@ -99,7 +86,6 @@ export const EventsPage = () => {
         ])
     })
 
-
     const [SellList, isSellLoading ] = useFetching(async () => {
         setSellEvents([{ 
         }])
@@ -107,55 +93,28 @@ export const EventsPage = () => {
     })
 
 
-
-
-
-    
-
-
     useEffect(() => {
         MainList()
         PayList()
         FlipList()
         SellList()
-    }, [],[])
-
-
-
+    }, [])
 
 
     return (
         <div className={`grid place-items-center gap-4 grid-cols-1 ${classes.myPage}`}>
-            {error && <ErrorPanel error={error} />}
             {responseError && <ErrorPanel error={responseError} />}
 
             <h1>Список событий</h1>
 
-            {isMainLoading ?
-                <Loader />
-                :
-                <MainEventTable events={mainEvents} errorFunc={setError} />
-            }
-
-            {isPayLoading?
-                 <Loader />
-                 :
-                 <PayEventTable events={payEvents}  errorFunc={setError}/>
-            }
+            {mainError && <ErrorPanel error={error} />}
+            {isMainLoading ? <Loader /> : <MainEventTable events={mainEvents} errorFunc={setError} /> }
             
-            {isFlipLoading?
-                 <Loader />
-                 :
-                 <FlipEventTable events={events}  errorFunc={setError} />
-            }
-             
-            {isSellLoading?
-                <Loader />
-                 :
-                 <sellEventsTable events={sellEvents}  errorFunc={setError} />
-            }
+            {isFlipLoading ? <Loader /> : <FlipEventTable events={events}  errorFunc={setError} /> }
 
-            <MyModal visible={modal} setVisible={setModal}><MyButton  style ={{marginTop: 30}} children={"Удалить"}/></MyModal>
+            {isPayLoading ? <Loader /> : <PayEventTable events={payEvents}  errorFunc={setError}/> }
+             
+            {isSellLoading ? <Loader /> : <SellEventTable events={sellEvents}  errorFunc={setError} /> }
         </div>
     )
 }

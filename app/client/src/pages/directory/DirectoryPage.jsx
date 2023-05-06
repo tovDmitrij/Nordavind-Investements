@@ -1,35 +1,70 @@
-import React, {useState, useEffect} from "react";
-import CurrenciesTable from "../../components/UI/tables/directoryTables/CurrenciesTable/CurrenciesTable";
-import TradeBotsTable from "../../components/UI/tables/directoryTables/TradeBotsTable/TradeBotsTable";
-import ConditionsTable from "../../components/UI/tables/directoryTables/ConditionsTable/ConditionsTable";
-import AccountTypesTable from "../../components/UI/tables/directoryTables/AccountTypesTable/AccountTypesTable";
+import React, {useState, useEffect, useContext} from "react";
+import CurrenciesTable from "../../components/UI/tables/directoryTables/currenciesTable/CurrenciesTable";
+import TradeBotsTable from "../../components/UI/tables/directoryTables/tradeBotsTable/TradeBotsTable";
+import ConditionsTable from "../../components/UI/tables/directoryTables/conditionsTable/ConditionsTable";
+import AccountTypesTable from "../../components/UI/tables/directoryTables/accountTypesTable/AccountTypesTable";
 import PieChart from "../../components/UI/diagram/PieChart";
+import { useFetching } from "../../components/hooks/useFetching";
+import APIService from "../../API/APIService";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../components/context/authContext";
+import { Loader } from "../../components/UI/loader/Loader";
 
 
 const DirectoryPage = () =>{
-    const[Currenciesdata, setCurrenciesdata] = useState([]);
-    const[TradeBotsdata, setTradeBotsdata] = useState([]);
-    const[AccountTypesdata, setAccountTypesdata] = useState([]);
-    const[Conditionsdata, setConditionsdata] = useState([]);
-    
-    const GenerateData = () =>{
-        setCurrenciesdata([{Title:'fafas',Value:'vasgh'},{Title:'gkdld', Value:'fkdooe'}])
-        setTradeBotsdata([{Title:'cjgk',Value:'fjkld'},{Title:'gkdfl', Value:'gfdfk'}])
-        setAccountTypesdata([{Title:'iqofl',Value:'toytio'},{Title:'qwriot', Value:'cmxxz'}])
-        setConditionsdata([{Title:'xznv', Description:'zjgl', Value:'eptpr'},{Title:'xmnv', Description:'topyp', Value:'zgjgkf'}])
-        
-    }
-    useEffect (() =>{GenerateData()}, [])
+    const navigate = useNavigate()
+    const {isAuth, setIsAuth} = useContext(AuthContext)
+    const [responseError, setError] = useState('')
+
+    const [Currenciesdata, setCurrenciesdata] = useState([]);
+    const [TradeBotsdata, setTradeBotsdata] = useState([]);
+    const [AccountTypesdata, setAccountTypesdata] = useState([]);
+    const [Conditionsdata, setConditionsdata] = useState([]);    
+
+
+    const [GetCurrencies, isCurrenciesLoading] = useFetching(async () => {
+        APIService.GetCurrenciesList().then(response => {
+            if (response.ok){
+                response.json().then((data) => {
+                    setCurrenciesdata(data.data)
+                    setError('')
+                })
+            }
+            else if (response.status === 401){
+                setIsAuth(false)
+                localStorage.clear()
+                navigate("/signIn")
+            }
+            else{
+                response.json().then((data) => {
+                    setError(data.status)
+                    console.log(data.status)
+                })
+            }
+        })
+    })
+
+    /** ... */
+
+
+    useEffect (() => {
+        GetCurrencies()
+        /** ... */
+    }, [])
+
+
     return(
         <div className="grid gap-4 grid-cols-1 grid-rows-4">
-            <CurrenciesTable Data={Currenciesdata}/>
+            {responseError}
+
+            {isCurrenciesLoading ? <Loader/> : <CurrenciesTable Data={Currenciesdata}/>}
             <AccountTypesTable Data={AccountTypesdata}/>
             <TradeBotsTable Data={TradeBotsdata}/>
             <ConditionsTable Data={Conditionsdata}/>
-           <PieChart />
+            <PieChart />
         </div>
-        
-
     )
 }
+
+
 export default DirectoryPage;

@@ -6,6 +6,7 @@ import { SignInForm } from '../../components/UI/forms/signIn/SignInForm'
 import { Loader } from '../../components/UI/loader/Loader'
 import { ErrorPanel } from '../../components/UI/error/ErrorPanel'
 import classes from './SignInPage.module.css'
+import APIService from '../../API/APIService'
 
 
 /**
@@ -21,22 +22,15 @@ export const SignInPage = () => {
      * @param {*} userInfo - почта и пароль пользователя
      */
     const [SignIn, isLoading, error] = useFetching(async (userInfo) => {
-        setIsAuth(true)
-        sessionStorage.setItem('id', 1)
-        sessionStorage.setItem('token', 1)                
-        navigate("/events")
-        {/* Когда будем соединять бэк и фронт - ЗАМЕНИТЬ!!!
-        await fetch(`https://localhost:7047/api/Auth/SignIn/email=${userInfo.email}&password=${userInfo.password}`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }).then(response => {
-            if(response.ok){
+        // setIsAuth(true)
+        // localStorage.setItem('token', 1)                
+        // navigate("/events")
+
+        APIService.SignInSubmit(userInfo).then(response => {
+            if (response.ok){
                 response.json().then((data) => {
                     setIsAuth(true)
-                    sessionStorage.setItem('id', data.id)
-                    sessionStorage.setItem('token', data.token)   
+                    localStorage.setItem('token', data.token) 
                     navigate("/events")             
                 })
             }
@@ -45,10 +39,7 @@ export const SignInPage = () => {
                     setError(data.status)
                 })
             }
-        }).catch(err => {
-            setError(err.status)
-        })
-        */}
+        }).catch(err => { setError(err.status) })
     })
 
     return(

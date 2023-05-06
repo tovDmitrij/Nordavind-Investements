@@ -15,8 +15,8 @@ const CurrenciesTable = ({Data, sample}) => {
             <tbody>
                 {Data.map((row) => ( 
                     <tr>
-                        <td>{row.Title} </td>
-                        <td>{row.Value} </td>
+                        <td>{row.title} </td>
+                        <td>{row.shortTitle} </td>
                     </tr>
                 ))}
             </tbody>

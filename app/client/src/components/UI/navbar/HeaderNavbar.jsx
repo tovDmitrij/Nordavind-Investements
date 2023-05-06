@@ -16,8 +16,7 @@ export const HeaderNavbar = () => {
      */
     const LogOut = () => {
         setIsAuth(false)
-        sessionStorage.removeItem('id')
-        sessionStorage.removeItem('token')
+        localStorage.removeItem('token')
     }
 
     return (

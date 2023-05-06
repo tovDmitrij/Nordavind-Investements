@@ -1,6 +1,6 @@
 import React from "react";
-import MyButton from '../../button/MyButton'
-import { useFetching } from "../../../hooks/useFetching";
+import MyButton from '../../.././button/MyButton'
+import { useFetching } from "../../../../hooks/useFetching"
 
 
 /**
