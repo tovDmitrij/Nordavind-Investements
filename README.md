@@ -1,3 +1,30 @@
+## Установка "ручками"
+
+### ===Клиент===
+Нужен установленный на ПК node.js и npm
+```
+cd app/client
+npm install
+npm start
+```
+### ===Сервер===
+Нужен Asp.Net Core 7
+```
+cd app/server
+```
+Запустить решение app.sln
+
+
+### ===БД===
+
+Нужен PostgreSQL 15 и pgAdmin4
+
+Для реализации БД необходимо её создать с наименованием *nordavind_investements*, а после загрузить скрипты *create.sql* и *insert.sql*, находящиеся в *app/server/database/scripts/nordavind_investements*.
+
+Опциональна БД для логгирования ошибок *nordavind_investements_logs*, скрипты которой находятся в *app/server/database/scripts/nordavind_investements_logs*.
+
+
+
 ## Установка через Docker (НЕ ДОДЕЛАНО)
 
 docker-compose up --build
@@ -14,6 +41,9 @@ docker
 
 **База данных**
 
+
+
+
 ## :floppy_disk: Архитектура БД
 
 <div align="center">
@@ -22,9 +52,8 @@ docker
 
 </div>
 
-Для реализации БД необходимо её создать с наименованием *nordavind_investements*, а после загрузить скрипты *create.sql* и *insert.sql*, находящиеся в *app/server/database/scripts/nordavind_investements*.
 
-Опциональна БД для логгирования ошибок *nordavind_investements_logs*, скрипты которой находятся в *app/server/database/scripts/nordavind_investements_logs*.
+
 
 ## :game_die: Архитектура сервера (на 12.04.23)
 
@@ -44,6 +73,9 @@ docker
 - *server/components/misc.security* - хеширование паролей
 - *server/database* - скрипты для БД Postgres
 
+
+
+
 ## :desktop_computer: Архитектура клиента
 
 Архитектура клиента **классическая**, т.е. "архитектура без архитектуры"
@@ -60,6 +92,9 @@ docker
 Для запросов к API необходимо использовать кастомный хук *useFetching* (*src/components/hooks/useFetching*), который в качестве параметра принимает анонимную функцию (в к-рой выполняется непосредственно *fetch*). За примерами смотрите *.\src\pages\directory\DirectoryPage.jsx*.
 
 Сами запросы лежат в классе APIService.js (*./src/API*)
+
+
+
 
 ## :computer: Стек технологий
 ### :desktop_computer: Фронтенд
