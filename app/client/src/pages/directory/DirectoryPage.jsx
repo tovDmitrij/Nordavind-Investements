@@ -44,11 +44,82 @@ const DirectoryPage = () =>{
         })
     })
 
+    const [GetBotTypes, isBotTypesLoading] = useFetching(async () => {
+        APIService.GetBotTypesList().then(response => {
+            if (response.ok) {
+                response.json().then((data) => {
+                    setTradeBotsdata(data.data)
+                    setError('')
+                })
+            }
+            else if (response.status === 401) {
+                setIsAuth(false)
+                localStorage.clear()
+                navigate("/signIn")
+            }
+            else {
+                response.json().then((data) => {
+                    setError(data.status)
+                    console.log(data.status)
+                })
+            }
+        })
+    })
+
+    const [GetConditions, isConditionsLoading] = useFetching(async () => {
+        APIService.GetConditionsList().then(response => {
+            if (response.ok) {
+                response.json().then((data) => {
+                    setConditionsdata(data.data)
+                    setError('')
+                })
+            }
+            else if (response.status === 401) {
+                setIsAuth(false)
+                localStorage.clear()
+                navigate("/signIn")
+            }
+            else {
+                response.json().then((data) => {
+                    setError(data.status)
+                    console.log(data.status)
+                })
+            }
+        })
+    })
+
+    const [GetAccountTypes, isAccountTypesLoading] = useFetching(async () => {
+        APIService.GetAccountTypesList().then(response => {
+            if (response.ok) {
+                response.json().then((data) => {
+                    setAccountTypesdata(data.data)
+                    setError('')
+                })
+            }
+            else if (response.status === 401) {
+                setIsAuth(false)
+                localStorage.clear()
+                navigate("/signIn")
+            }
+            else {
+                response.json().then((data) => {
+                    setError(data.status)
+                    console.log(data.status)
+                })
+            }
+        })
+    })
+
     /** ... */
 
 
     useEffect (() => {
         GetCurrencies()
+        GetBotTypes()
+        GetConditions()
+        GetAccountTypes()
+
+
         /** ... */
     }, [])
 
@@ -57,10 +128,10 @@ const DirectoryPage = () =>{
         <div className="grid gap-4 grid-cols-1 grid-rows-4">
             {responseError}
 
-            {isCurrenciesLoading ? <Loader/> : <CurrenciesTable Data={Currenciesdata}/>}
-            <AccountTypesTable Data={AccountTypesdata}/>
-            <TradeBotsTable Data={TradeBotsdata}/>
-            <ConditionsTable Data={Conditionsdata}/>
+            {isCurrenciesLoading ? <Loader /> : <CurrenciesTable Data={Currenciesdata} />}
+            {isBotTypesLoading ? <Loader /> : <TradeBotsTable Data={TradeBotsdata} />}
+            {isConditionsLoading ? <Loader /> : <ConditionsTable Data={Conditionsdata} />}
+            {isAccountTypesLoading ? <Loader /> : <AccountTypesTable Data={AccountTypesdata} />}    
             <PieChart />
         </div>
     )

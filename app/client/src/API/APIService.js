@@ -46,6 +46,91 @@ export default class APIService {
             }
         })
     }
+    /**
+     * Получить список типов счётов
+     */
+    static async GetAccountTypesList() {
+        return await fetch(`${url}Directory/AccountTypes/Get`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem('token')
+            }
+        })
+    }
+    /**
+     * Получить список типов ботов
+     */
+    static async GetBotTypesList() {
+        return await fetch(`${url}Directory/BotTypes/Get`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem('token')
+            }
+        })
+    }
+    /**
+     * Получить список распределения заработанного
+     */
+    static async GetConditionsList() {
+        return await fetch(`${url}Directory/Conditions/Get`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem('token')
+            }
+        })
+    }
+    /**
+     * Получить список ввода/вывода
+     */
+    static async GetMainEventsList() {
+        return await fetch(`${url}Event/MainEvents/Get`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem('token')
+            }
+        })
+    }
+    /**
+     * Получить список переводов
+     */
+    static async GetFlipEventsList() {
+        return await fetch(`${url}Event/FlipEvents/Get`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem('token')
+            }
+        })
+    }
+    /**
+     * Получить список оплат
+     */
+    static async GetPayEventsList() {
+        return await fetch(`${url}Event/PayEvents/Get`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem('token')
+            }
+        })
+    }
+    /**
+     * Получить список продаж
+     */
+    static async GetSellEventsList() {
+        return await fetch(`${url}Event/SellEvents/Get`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem('token')
+            }
+        })
+    }
+ 
 
     /**... */
 }
