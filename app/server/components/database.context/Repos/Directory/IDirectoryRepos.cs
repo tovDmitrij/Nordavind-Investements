@@ -1,10 +1,6 @@
 ﻿using database.context.Models.Data;
-
 namespace database.context.Repos.Directory
 {
-    /// <summary>
-    /// Взаимодействие с таблицей валют в базе данных
-    /// </summary>
     public interface IDirectoryRepos
     {
         public void AddCurrency(CurrencyModel currency);

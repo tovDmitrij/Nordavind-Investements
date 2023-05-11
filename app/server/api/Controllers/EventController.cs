@@ -83,11 +83,11 @@ namespace api.Controllers
         public IActionResult GetFlipEventList(int acc_id)
         {
             if (!_eventRepos.IsAccountIdExists(acc_id))
-                return StatusCode(404, new { status = "Счёта не сущетсвует" });
+                return StatusCode(404, new { status = "Аккаунта не сущетсвует" });
             var events = _eventRepos.GetFlipEvents(acc_id);
             if (!events.Any())
-                return StatusCode(404, new { status = "Список событий пуст" });
-            return StatusCode(200, new { status = "Список событий был успешно сформирован", data = events });
+                return StatusCode(404, new { status = "Данные были не найдены" });
+            return StatusCode(200, new { status = "События были найдены", data = events });
         }
 
         [ProducesResponseType(typeof(IEnumerable<HistorySellEventModel>), 200)]
@@ -95,11 +95,11 @@ namespace api.Controllers
         public IActionResult GetSellEventList(int acc_id)
         {
             if (!_eventRepos.IsAccountIdExists(acc_id))
-                return StatusCode(404, new { status = "Такого счёта не существует" });
+                return StatusCode(404, new { status = "Аккаунта не сущетсвует" });
             var events = _eventRepos.GetSellEvents(acc_id);
             if (!events.Any())
-                return StatusCode(404, new { status = "Список событий пуст" });
-            return StatusCode(200, new { status = "Список событий был успешно сформирован", data = events });
+                return StatusCode(404, new { status = "Данные были не найдены" });
+            return StatusCode(200, new { status = "События были найдены", data = events });
         }
 
         #endregion
@@ -125,11 +125,11 @@ namespace api.Controllers
         public IActionResult AddEvent(int op_id, int acc_from, int acc_to, int fund_id, decimal value, DateTime date)
         {
             if (!_eventRepos.IsAccountIdExists(acc_from))
-                return StatusCode(404, new { status = "Такого счёта X не существует" });
+                return StatusCode(404, new { status = "Аккаунта X не существует" });
             if (!_eventRepos.IsAccountIdExists(acc_to))
-                return StatusCode(404, new { status = "Такого счёта Y не существует" });
+                return StatusCode(404, new { status = "Аккаунта Y не существует" });
             if (!_eventRepos.IsOperationExists(op_id))
-                return StatusCode(404, new { status = "Такой операции не существует" });
+                return StatusCode(404, new { status = "Операции не существует" });
             if (!_eventRepos.IsFundIdExists(fund_id))
                 return StatusCode(404, new { status = "Тип средств не существует" });
 
@@ -151,9 +151,9 @@ namespace api.Controllers
         public IActionResult AddEvent(int op_id, decimal value, DateTime date, int acc_id, int bot_type)
         {
             if (!_eventRepos.IsAccountIdExists(acc_id))
-                return StatusCode(404, new { status = "Такого счёта не существует" });
+                return StatusCode(404, new { status = "Аккаунта не существует" });
             if (!_eventRepos.IsOperationExists(op_id))
-                return StatusCode(404, new { status = "Такой операции не существует" });
+                return StatusCode(404, new { status = "Операции не существует" });
             if (!_eventRepos.IsBotTypeExists(bot_type))
                 return StatusCode(404, new { status = "Тип бота не найден" });
 
@@ -171,7 +171,7 @@ namespace api.Controllers
         public IActionResult UpdateMainEvent(int event_id, int acc_id, int hold_interest, string link)
         {
             if (!_eventRepos.IsAccountIdExists(acc_id))
-                return StatusCode(404, new { status = "Такого счёта не существует" });
+                return StatusCode(404, new { status = "Аккаунта не существует" });
             if (!_eventRepos.IsEventExists(event_id))
                 return StatusCode(404, new { status = "Событие не найдено" });
 
@@ -183,11 +183,11 @@ namespace api.Controllers
         public IActionResult UpdateFlipEvent(int event_id, int acc_from, int acc_to, int fund_id)
         {
             if (!_eventRepos.IsEventExists(event_id))
-                return StatusCode(404, new { status = "Такого события не существует" });
+                return StatusCode(404, new { status = "Событие было не найдено" });
             if (!_eventRepos.IsAccountIdExists(acc_from))
-                return StatusCode(404, new { status = "Такого счёта X не существует" });
+                return StatusCode(404, new { status = "Аккаунта X не существует" });
             if (!_eventRepos.IsAccountIdExists(acc_to))
-                return StatusCode(404, new { status = "Такого счёта Y не существует" });
+                return StatusCode(404, new { status = "Аккаунта Y не существует" });
             if (!_eventRepos.IsFundIdExists(fund_id))
                 return StatusCode(404, new { status = "Тип средств не существует" });
 
@@ -202,16 +202,16 @@ namespace api.Controllers
                 return StatusCode(404, new { status = "Событие не найдено" });
 
             _eventRepos.UpdatePayEvent(event_id,link);
-            return StatusCode(200, new { status = "Событие было обновлено" });
+            return StatusCode(200, new { status = "Собыьте было обновлено" });
         }
 
         [HttpPut("SellEvents/Update/event_id={event_id:int}&acc_id={acc_id:int}&bot_type={bot_type:int}")]
         public IActionResult UpdateSellEvent(int event_id, int acc_id, int bot_type)
         {
             if (!_eventRepos.IsEventExists(event_id))
-                return StatusCode(404, new { status = "Такого события не существует" });
+                return StatusCode(404, new { status = "Событие не найдено" });
             if (!_eventRepos.IsAccountIdExists(acc_id))
-                return StatusCode(404, new { status = "Такого счёта не существует" });
+                return StatusCode(404, new { status = "Аккаунта не существует" });
             if (!_eventRepos.IsBotTypeExists(bot_type))
                 return StatusCode(404, new { status = "Тип бота не найден" });
 

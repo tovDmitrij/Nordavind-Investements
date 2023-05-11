@@ -36,7 +36,6 @@ namespace database.context.Models.Events.Sell
         [Column("bot_id")]
         public int BotId { get; set; }
 
-
         [Required]
         [Column("bot_title")]
         public string BotTitle { get; set; }

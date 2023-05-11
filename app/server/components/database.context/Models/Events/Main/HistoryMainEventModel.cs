@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
 namespace database.context.Models.Events.Main
 {
     [Keyless]
@@ -43,6 +42,5 @@ namespace database.context.Models.Events.Main
         }
 
         public HistoryMainEventModel() { }
-
     }
 }

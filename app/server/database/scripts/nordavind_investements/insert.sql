@@ -22,5 +22,5 @@ insert into funds(title, description) values('Тело', 'Внесённые и�
 
 insert into conditions(title, value, description) values('X%', 1, 'X должен задаваться от 1 до 100, где X % - это то, что получает инвестор. Т.е. процент');
 insert into conditions(title, value, description) values('Y/Y', 1, 'Y должен задаваться от 1 до 5, где Y - это количество соинвесторов, в т.ч. мы. Т.е. доля');
-insert into conditions(title, value, description) values('16%', 16, 'Инвестора будут получать 16% с прибыли');
-insert into conditions(title, value, description) values('1/4', 1/4, 'Инвестора будут получать 1/4 доли с прибыли');
+insert into conditions(title, value, description) values('16%', 0.16, 'Инвестора будут получать 16% с прибыли');
+insert into conditions(title, value, description) values('1/4', 0.25, 'Инвестора будут получать 1/4 доли с прибыли');

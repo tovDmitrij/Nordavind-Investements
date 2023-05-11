@@ -3,17 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33403.182
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "client", "client\client.esproj", "{45FB5A4D-6ECE-4AF0-AEFC-2B00EE5FA630}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "api", "server\api\api.csproj", "{29596AB6-BD59-4CC4-BB82-4B1B71E597E2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "misc.security", "server\components\misc.security\misc.security.csproj", "{89B3FF6F-F23A-4406-94E6-C62F2D430798}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "misc.security", "server\components\misc.security\misc.security.csproj", "{89B3FF6F-F23A-4406-94E6-C62F2D430798}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "database.context", "server\components\database.context\database.context.csproj", "{27764AA4-A391-4F58-B8A1-BF062266AEAC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "api.logger.error", "server\components\api.logger.error\api.logger.error.csproj", "{BCFF0332-9618-4468-89FF-7E2561E855AB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "database.context.logs", "server\components\database.context.logs\database.context.logs.csproj", "{8CFAE69E-979E-41FA-AB3F-6BB2E3227F44}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "database.context", "server\components\database.context\database.context.csproj", "{27764AA4-A391-4F58-B8A1-BF062266AEAC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,12 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{45FB5A4D-6ECE-4AF0-AEFC-2B00EE5FA630}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{45FB5A4D-6ECE-4AF0-AEFC-2B00EE5FA630}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{45FB5A4D-6ECE-4AF0-AEFC-2B00EE5FA630}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{45FB5A4D-6ECE-4AF0-AEFC-2B00EE5FA630}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{45FB5A4D-6ECE-4AF0-AEFC-2B00EE5FA630}.Release|Any CPU.Build.0 = Release|Any CPU
-		{45FB5A4D-6ECE-4AF0-AEFC-2B00EE5FA630}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{29596AB6-BD59-4CC4-BB82-4B1B71E597E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{29596AB6-BD59-4CC4-BB82-4B1B71E597E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29596AB6-BD59-4CC4-BB82-4B1B71E597E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,14 +27,6 @@ Global
 		{27764AA4-A391-4F58-B8A1-BF062266AEAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27764AA4-A391-4F58-B8A1-BF062266AEAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27764AA4-A391-4F58-B8A1-BF062266AEAC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BCFF0332-9618-4468-89FF-7E2561E855AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BCFF0332-9618-4468-89FF-7E2561E855AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BCFF0332-9618-4468-89FF-7E2561E855AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BCFF0332-9618-4468-89FF-7E2561E855AB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8CFAE69E-979E-41FA-AB3F-6BB2E3227F44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8CFAE69E-979E-41FA-AB3F-6BB2E3227F44}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8CFAE69E-979E-41FA-AB3F-6BB2E3227F44}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8CFAE69E-979E-41FA-AB3F-6BB2E3227F44}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
