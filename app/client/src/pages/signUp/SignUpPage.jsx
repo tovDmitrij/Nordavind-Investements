@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useFetching } from '../../components/hooks/useFetching'
-import { SignUpForm } from '../../components/UI/forms/signUp/SignUpForm'
-import { Loader } from '../../components/UI/loader/Loader'
 import { ErrorPanel } from '../../components/UI/error/ErrorPanel'
-import classes from './SignUpPage.module.css'
+import {Loader} from '../../components/UI/loader/Loader'
 import APIService from '../../API/APIService'
+import styles from './SignUpPage.module.css'
+import SignUpForm from '../../components/UI/forms/signUp/SignUpForm'
 
 
 /**
  * Страница для регистрации пользователя в системе
  */
-export const SignUpPage = () => {
+const SignUpPage = () => {
     const navigate = useNavigate();
     const [responseError, setError] = useState('')
 
@@ -33,11 +33,15 @@ export const SignUpPage = () => {
     })
 
     return(
-        <div className={`grid place-items-center gap-4 grid-cols-1 grid-rows-1 ${classes.myPage}`}>
+        <div className={`grid place-self-center place-items-center gap-4 grid-cols-1 grid-rows-1 ${styles.myPage}`}>            
             <SignUpForm accept={SignUp} error={setError} />
             
-            {error && <ErrorPanel error={error} /> }
-            {responseError && <ErrorPanel error={responseError} /> }
+            {isLoading && <Loader />}
+            {error && <ErrorPanel error={error} />}
+            {responseError && <ErrorPanel error={responseError} />}
         </div>
     )
 }
+
+
+export default SignUpPage

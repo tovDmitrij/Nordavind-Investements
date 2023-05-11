@@ -1,7 +1,8 @@
 import React, {useState} from 'react'
 import MyInput from '../../input/MyInput'
 import MyButton from '../../button/MyButton'
-import classes from './SignInForm.module.css'
+import FormLabel from '../../labels/FormLabel'
+import styles from './SignInForm.module.css'
 
 
 /**
@@ -9,7 +10,7 @@ import classes from './SignInForm.module.css'
  * @param {*} accept - callback-функция для передачи данных
  * @param {*} error - callback-функция для передачи возможной ошибки
  */
-export const SignInForm = ({accept, error}) => {
+const SignInForm = ({accept, error}) => {
     const[email, setEmail] = useState('')
     const[password, setPassword] = useState('')
 
@@ -41,19 +42,34 @@ export const SignInForm = ({accept, error}) => {
     }
 
     return(
-        <form className={`grid place-items-center gap-4 grid-cols-1 grid-rows-4 ${classes.myForm}`}>
-            <h1 className={classes.myHeader}>Авторизация</h1>
-            <MyInput 
-                type="email"
-                onChange={e => setEmail(e.target.value)}
-                placeholder='Введите логин'/>
-            <MyInput
-                type="password"
-                onChange={e => setPassword(e.target.value)}
-                placeholder='Введите пароль'/>
+        <form className={`grid grid-cols-1 ${styles.myForm}`}>
+            <div className='grid place-items-center'>
+                <h1 className={styles.myHeader}>Авторизация</h1>
+                <hr/>
+            </div>
+
+            <FormLabel title={'Почта'}/>
+            <div className='grid place-items-center'>
+                <MyInput 
+                    type="email"
+                    onChange={e => setEmail(e.target.value)}
+                    placeholder='Введите логин'/>
+            </div>
+            
+            <FormLabel title={'Пароль'}/>
+            <div className='grid place-items-center'>
+                <MyInput
+                    type="password"
+                    onChange={e => setPassword(e.target.value)}
+                    placeholder='Введите пароль'/>
+            </div>
+                
             <MyButton 
                 onClick={SignIn}
                 children={"Подтвердить"}/>
         </form>
     )
 }
+
+
+export default SignInForm

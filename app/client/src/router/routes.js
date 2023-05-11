@@ -1,5 +1,5 @@
-import { SignInPage } from '../pages/signIn/SignInPage'
-import { SignUpPage } from '../pages/signUp/SignUpPage'
+import SignInPage from '../pages/signIn/SignInPage'
+import SignUpPage from '../pages/signUp/SignUpPage'
 import { EventsPage } from '../pages/events/EventsPage'
 import  DirectoryPage  from '../pages/directory/DirectoryPage'
 

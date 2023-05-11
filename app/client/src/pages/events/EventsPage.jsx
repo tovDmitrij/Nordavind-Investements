@@ -1,15 +1,15 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { useFetching } from '../../components/hooks/useFetching'
-import { Loader } from '../../components/UI/loader/Loader'
-import { ErrorPanel } from '../../components/UI/error/ErrorPanel'
-import { MainEventTable } from '../../components/UI/tables/eventTables/mainEvents/mainEventTable'
-import { PayEventTable } from '../../components/UI/tables/eventTables/payEvents/payEventTable'
-import { FlipEventTable } from '../../components/UI/tables/eventTables/flipEvents/flipEventTable';
-import { SellEventTable } from '../../components/UI/tables/eventTables/sellEvents/sellEventsTable';
-import APIService from "../../API/APIService";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../components/context/authContext";
-import classes from './EventsPage.module.css'
+import { Loader } from '../../components/UI/loader/Loader'
+import { ErrorPanel } from '../../components/UI/error/ErrorPanel'
+import APIService from "../../API/APIService";
+import MainEventTable from '../../components/UI/tables/eventTables/mainEvents/mainEventTable'
+import PayEventTable from '../../components/UI/tables/eventTables/payEvents/payEventTable'
+import FlipEventTable from '../../components/UI/tables/eventTables/flipEvents/flipEventTable';
+import SellEventTable from '../../components/UI/tables/eventTables/sellEvents/sellEventsTable';
+import styles from './EventsPage.module.css'
 
 
 export const EventsPage = () => {
@@ -115,7 +115,6 @@ export const EventsPage = () => {
 
     })
 
-
     useEffect(() => {
         MainList()
         PayList()
@@ -123,21 +122,16 @@ export const EventsPage = () => {
         SellList()
     }, [])
 
-
     return (
-        <div className={`grid place-items-center gap-4 grid-cols-1 ${classes.myPage}`}>
+        <div className={`grid place-self-center place-items-center gap-4 grid-cols-1 grid-rows-1 ${styles.myPage}`}>
+            <h1 className="text-3xl font-bold">События</h1>
             {responseError && <ErrorPanel error={responseError} />}
-
-            <h1>Список событий</h1>
-
-           
-            {isMainLoading ? <Loader /> : <MainEventTable events={mainEvents} errorFunc={setError} /> }
-            
-            {isFlipLoading ? <Loader /> : <FlipEventTable events={flipevents}  errorFunc={setError} /> }
-
-            {isPayLoading ? <Loader /> : <PayEventTable events={payEvents}  errorFunc={setError}/> }
-             
-            {isSellLoading ? <Loader /> : <SellEventTable events={sellEvents}  errorFunc={setError} /> }
+            <div className="grid gap-5 grid-cols-2">
+                {isMainLoading  ? <Loader /> : <MainEventTable events={mainEvents} errorFunc={setError} /> }          
+                {isFlipLoading  ? <Loader /> : <FlipEventTable events={flipevents} errorFunc={setError} /> }
+                {isPayLoading   ? <Loader /> : <PayEventTable events={payEvents}  errorFunc={setError}/> }             
+                {isSellLoading  ? <Loader /> : <SellEventTable events={sellEvents}  errorFunc={setError} /> }
+            </div>
         </div>
     )
 }

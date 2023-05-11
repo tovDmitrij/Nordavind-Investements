@@ -46,6 +46,7 @@ export default class APIService {
             }
         })
     }
+
     /**
      * Получить список типов счётов
      */
@@ -58,6 +59,7 @@ export default class APIService {
             }
         })
     }
+
     /**
      * Получить список типов ботов
      */
@@ -70,6 +72,7 @@ export default class APIService {
             }
         })
     }
+
     /**
      * Получить список распределения заработанного
      */
@@ -82,6 +85,7 @@ export default class APIService {
             }
         })
     }
+
     /**
      * Получить список ввода/вывода
      */
@@ -94,6 +98,7 @@ export default class APIService {
             }
         })
     }
+
     /**
      * Получить список переводов
      */
@@ -106,6 +111,7 @@ export default class APIService {
             }
         })
     }
+
     /**
      * Получить список оплат
      */
@@ -118,6 +124,7 @@ export default class APIService {
             }
         })
     }
+
     /**
      * Получить список продаж
      */
@@ -130,7 +137,4 @@ export default class APIService {
             }
         })
     }
- 
-
-    /**... */
 }
