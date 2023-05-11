@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
 namespace database.context.Models.Events.Main
 {
     [Table("main_events")]
@@ -18,25 +17,13 @@ namespace database.context.Models.Events.Main
         [Column("hold_interest")]
         public bool HoldInterest { get; set; }
 
-        [Required]
-        [Column("link")]
-        public string Link { get; set; }
-
-
-
-        public MainEventModel(int id, int accountId, bool hold_interest, string link) : this(accountId, hold_interest, link)
+        public MainEventModel(int id, int accountId, bool hold_interest)
         {
             ID = id;
-        }
-
-        public MainEventModel(int accountId, bool hold_interest, string link)
-        {
             AccountId = accountId;
             HoldInterest = hold_interest;
-            Link = link;
         }
 
         public MainEventModel() { }
-
     }
 }

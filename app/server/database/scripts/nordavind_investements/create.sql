@@ -73,8 +73,7 @@ create table if not exists events(
 create table if not exists main_events(
 	id integer primary key references events(id),
 	account_id integer not null references accounts(id),
-	hold_interest boolean default true not null,
-	link text
+	hold_interest boolean default true not null
 );
 
 create table if not exists flip_events(
@@ -121,16 +120,13 @@ create table if not exists account_investors(
 	id serial primary key,
 	investor_id integer not null references investors(id),
 	account_id integer not null references accounts(id),
-	percent decimal not null,
-	description text,
 	date timestamp default current_timestamp not null
 );
 
 create table if not exists investor_events(
 	id serial primary key,
 	investor_id integer not null references investors(id),
-	event_id integer not null references events(id),
-	description text
+	event_id integer not null references events(id)
 );
 
 

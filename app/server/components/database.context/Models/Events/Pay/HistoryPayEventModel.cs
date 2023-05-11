@@ -42,6 +42,5 @@ namespace database.context.Models.Events.Pay
         }
 
         public HistoryPayEventModel() { }
-
     }
 }

@@ -6,7 +6,6 @@ using database.context.Models.Events.Flip;
 using database.context.Models.Events.Main;
 using database.context.Models.Events.Pay;
 using database.context.Models.Events.Sell;
-
 namespace database.context
 {
     /// <summary>

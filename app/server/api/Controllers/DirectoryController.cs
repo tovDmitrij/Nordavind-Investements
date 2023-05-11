@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using database.context.Models.Data;
 using database.context.Repos.Directory;
-
 namespace api.Controllers
 {
     [ApiController]

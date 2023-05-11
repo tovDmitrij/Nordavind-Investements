@@ -5,7 +5,6 @@ using database.context.Models.Events.Main;
 using database.context.Models.Events.Pay;
 using database.context.Models.Events.Sell;
 using database.context.Repos.Event;
-
 namespace api.Controllers
 {
     [ApiController]
