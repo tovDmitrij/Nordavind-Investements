@@ -1,18 +1,18 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { useFetching } from '../../components/hooks/useFetching'
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../components/context/authContext";
-import { Loader } from '../../components/UI/loader/Loader'
-import { ErrorPanel } from '../../components/UI/error/ErrorPanel'
+import AuthContext from "../../components/context/authContext";
+import Loader from '../../components/UI/loaders/Loader'
+import ErrorPanel from '../../components/UI/panels/ErrorPanel'
 import APIService from "../../API/APIService";
-import MainEventTable from '../../components/UI/tables/eventTables/mainEvents/mainEventTable'
-import PayEventTable from '../../components/UI/tables/eventTables/payEvents/payEventTable'
-import FlipEventTable from '../../components/UI/tables/eventTables/flipEvents/flipEventTable';
-import SellEventTable from '../../components/UI/tables/eventTables/sellEvents/sellEventsTable';
+import MainEventTable from '../../components/UI/tables/eventTables/mainEvents/MainEventTable'
+import PayEventTable from '../../components/UI/tables/eventTables/payEvents/PayEventTable'
+import FlipEventTable from '../../components/UI/tables/eventTables/flipEvents/FlipEventTable';
+import SellEventTable from '../../components/UI/tables/eventTables/sellEvents/SellEventsTable';
 import styles from './EventsPage.module.css'
 
 
-export const EventsPage = () => {
+const EventsPage = () => {
     const navigate = useNavigate()
     const { isAuth, setIsAuth } = useContext(AuthContext)
 
@@ -26,10 +26,7 @@ export const EventsPage = () => {
     const [MainList, isMainLoading] = useFetching(async () => {
         APIService.GetMainEventsList().then(response => {
             if (response.ok) {
-                response.json().then((events) => {
-                    setMainEvents(events.events)
-                    setError('')
-                })
+                response.json().then((events) => { setMainEvents(events.events) })
             }
             else if (response.status === 401) {
                 setIsAuth(false)
@@ -37,23 +34,16 @@ export const EventsPage = () => {
                 navigate("/signIn")
             }
             else {
-                response.json().then((events) => {
-                    setError(events.status)
-                    console.log(events.status)
-                })
+                response.json().then((events) => { setError(events.status) })
             }
-        })
+        }).catch(err => { setError(err.status) })
 
-         
     })
 
     const [PayList, isPayLoading ] = useFetching(async () => {
         APIService.GetPayEventsList().then(response => {
             if (response.ok) {
-                response.json().then((events) => {
-                    setPayEvent(events.events)
-                    setError('')
-                })
+                response.json().then((events) => { setPayEvent(events.events) })
             }
             else if (response.status === 401) {
                 setIsAuth(false)
@@ -61,22 +51,16 @@ export const EventsPage = () => {
                 navigate("/signIn")
             }
             else {
-                response.json().then((events) => {
-                    setError(events.status)
-                    console.log(events.status)
-                })
+                response.json().then((events) => { setError(events.status) })
             }
-        })
+        }).catch(err => { setError(err.status) })
 
     })
 
     const [FlipList, isFlipLoading ] = useFetching( async () => {
         APIService.GetFlipEventsList().then(response => {
             if (response.ok) {
-                response.json().then((events) => {
-                    setFlipEvents(events.events)
-                    setError('')
-                })
+                response.json().then((events) => { setFlipEvents(events.events) })
             }
             else if (response.status === 401) {
                 setIsAuth(false)
@@ -84,21 +68,15 @@ export const EventsPage = () => {
                 navigate("/signIn")
             }
             else {
-                response.json().then((events) => {
-                    setError(events.status)
-                    console.log(events.status)
-                })
+                response.json().then((events) => { setError(events.status) })
             }
-        })
+        }).catch(err => { setError(err.status) })
     })
 
     const [SellList, isSellLoading ] = useFetching(async () => {
         APIService.GetSellEventsList().then(response => {
             if (response.ok) {
-                response.json().then((events) => {
-                    setSellEvents(events.events)
-                    setError('')
-                })
+                response.json().then((events) => { setSellEvents(events.events) })
             }
             else if (response.status === 401) {
                 setIsAuth(false)
@@ -106,12 +84,9 @@ export const EventsPage = () => {
                 navigate("/signIn")
             }
             else {
-                response.json().then((events) => {
-                    setError(events.status)
-                    console.log(events.status)
-                })
+                response.json().then((events) => { setError(events.status) })
             }
-        })
+        }).catch(err => { setError(err.status) })
 
     })
 
@@ -135,3 +110,6 @@ export const EventsPage = () => {
         </div>
     )
 }
+
+
+export default EventsPage

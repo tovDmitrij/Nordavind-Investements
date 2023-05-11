@@ -1,14 +1,14 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { AuthContext } from "../../context/authContext"
-import MyButton from '../button/MyButton'
+import AuthContext from "../../context/authContext"
+import MyButton from '../buttons/MyButton'
 import styles from './HeaderNavbar.module.css'
 
 
 /**
  * Навигационная панель веб-приложения
  */
-export const HeaderNavbar = () => {
+const HeaderNavbar = () => {
     const {isAuth, setIsAuth} = useContext(AuthContext)
 
     /**
@@ -53,3 +53,6 @@ export const HeaderNavbar = () => {
         )
     )
 }
+
+
+export default HeaderNavbar

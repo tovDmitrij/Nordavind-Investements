@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 
+
 const AddDictionaryForm = ({ onSubmit }) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-    onSubmit({ name, description });
+      event.preventDefault();
+      onSubmit({ name, description });
   };
+
 
   return (
     <form onSubmit={handleSubmit}>
@@ -25,5 +27,6 @@ const AddDictionaryForm = ({ onSubmit }) => {
     </form>
   );
 };
+
 
 export default AddDictionaryForm;

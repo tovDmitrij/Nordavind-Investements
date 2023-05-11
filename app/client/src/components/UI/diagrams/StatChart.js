@@ -22,7 +22,10 @@ const data = {
 };
 
 
-const PieChart = () => {
+/**
+ * Круговая диаграмма
+ */
+const StatChart = () => {
     return (
         <div>
           <Pie data={data}/>
@@ -31,4 +34,4 @@ const PieChart = () => {
 };
 
 
-export default PieChart;
+export default StatChart;

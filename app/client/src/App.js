@@ -1,9 +1,9 @@
 import React, { useEffect } from "react"
 import { useState } from "react"
 import { BrowserRouter } from "react-router-dom"
-import { AuthContext } from "./components/context/authContext"
-import { AppRouter } from './components/AppRouter'
-import { HeaderNavbar } from "./components/UI/navbar/HeaderNavbar"
+import AuthContext from "./components/context/authContext"
+import AppRouter from './components/AppRouter'
+import HeaderNavbar from "./components/UI/navbars/HeaderNavbar"
 
 
 function App() {

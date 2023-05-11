@@ -1,7 +1,11 @@
 import React from "react";
-import MyButton from '../../.././button/MyButton'
+import MyButton from '../../../buttons/MyButton'
 
 
+/**
+ * Таблица с событиями на продажу
+ * @param {*} events - список событий
+ */
 const SellEventTable= ({events})=>{
 
     return (

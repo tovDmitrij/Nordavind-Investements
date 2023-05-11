@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+
 const UpdateDictionaryForm = ({ dictionary, onSubmit }) => {
   const [name, setName] = useState(dictionary.name);
   const [description, setDescription] = useState(dictionary.description);
@@ -10,7 +11,7 @@ const UpdateDictionaryForm = ({ dictionary, onSubmit }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className='bg-slate-300'>
       <label>
         Name:
         <input type="text" value={name} onChange={(event) => setName(event.target.value)} />
@@ -25,5 +26,6 @@ const UpdateDictionaryForm = ({ dictionary, onSubmit }) => {
     </form>
   );
 };
+
 
 export default UpdateDictionaryForm;

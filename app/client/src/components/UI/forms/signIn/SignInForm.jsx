@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
-import MyInput from '../../input/MyInput'
-import MyButton from '../../button/MyButton'
+import MyInput from '../../inputs/MyInput'
+import MyButton from '../../buttons/MyButton'
 import FormLabel from '../../labels/FormLabel'
 import styles from './SignInForm.module.css'
 

@@ -1,11 +1,14 @@
 import React, { useContext } from 'react'
 import { Route, Routes, Navigate } from "react-router-dom"
-import { Loader } from './UI/loader/Loader'
-import { AuthContext } from './context/authContext'
+import Loader from './UI/loaders/Loader'
 import { publicRoutes, privateRoutes } from '../router/routes'
+import AuthContext from './context/authContext'
 
 
-export const AppRouter = () => {
+/**
+ * Маршрутизатор приложения
+ */
+const AppRouter = () => {
     const {isAuth, setIsAuth, isLoading} = useContext(AuthContext)
 
     if (isLoading) {
@@ -29,3 +32,6 @@ export const AppRouter = () => {
         </Routes>)
     )
 }
+
+
+export default AppRouter
