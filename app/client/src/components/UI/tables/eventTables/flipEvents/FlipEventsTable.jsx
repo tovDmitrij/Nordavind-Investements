@@ -26,7 +26,7 @@ const FlipEventTable = ({events}) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {events.length == 0 ?
+                    {events.length === 0 ?
                         <tr>
                             <td colSpan={7} class="border px-8 py-4">
                                 События отсутствуют
