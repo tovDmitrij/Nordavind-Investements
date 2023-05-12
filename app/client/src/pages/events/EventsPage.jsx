@@ -8,7 +8,7 @@ import APIService from "../../API/APIService";
 import MainEventTable from '../../components/UI/tables/eventTables/mainEvents/MainEventsTable'
 import PayEventTable from '../../components/UI/tables/eventTables/payEvents/PayEventsTable'
 import FlipEventTable from '../../components/UI/tables/eventTables/flipEvents/FlipEventsTable';
-import SellEventTable from '../../components/UI/tables/eventTables/sellEvents/SellEvents1Table';
+import SellEventTable from '../../components/UI/tables/eventTables/sellEvents/SellEventsTable';
 import styles from './EventsPage.module.css'
 
 
