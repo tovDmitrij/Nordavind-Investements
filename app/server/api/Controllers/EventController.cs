@@ -108,8 +108,8 @@ namespace api.Controllers
 
         #region POST
 
-        [HttpPost("MainEvents/Add/op_id={op_id:int}&acc_id={acc_id:int}&value={value:decimal}&date={date:datetime}&hold_interest={hold_interest:int}&link={link}")]
-        public IActionResult AddEvent(int op_id, int acc_id, decimal value, DateTime date, int hold_interest, string? link)
+        [HttpPost("MainEvents/Add/op_id={op_id:int}&acc_id={acc_id:int}&value={value:decimal}&date={date:datetime}&hold_interest={hold_interest:int}")]
+        public IActionResult AddEvent(int op_id, int acc_id, decimal value, DateTime date, int hold_interest)
         {
             if (!_eventRepos.IsAccountIdExists(acc_id))
                 return StatusCode(404, new { status = "Аккаунта не существует" });
@@ -117,7 +117,7 @@ namespace api.Controllers
             if (!_eventRepos.IsOperationExists(op_id))
                 return StatusCode(404, new { status = "Операции не существует" });
 
-            _eventRepos.AddMainEvent(op_id,value,date,acc_id,Convert.ToBoolean(hold_interest),link);
+            _eventRepos.AddMainEvent(op_id,value,date,acc_id,Convert.ToBoolean(hold_interest));
             return StatusCode(200, new { status = "Событие по внесению/выводу средств было успешно добавлено" });
         }
 
@@ -167,15 +167,15 @@ namespace api.Controllers
 
         #region PUT
 
-        [HttpPut("MainEvents/Update/event_id={event_id:int}&acc_id={acc_id:int}&hold_interest={hold_interest:int}&link={link}")]
-        public IActionResult UpdateMainEvent(int event_id, int acc_id, int hold_interest, string link)
+        [HttpPut("MainEvents/Update/event_id={event_id:int}&acc_id={acc_id:int}&hold_interest={hold_interest:int}")]
+        public IActionResult UpdateMainEvent(int event_id, int acc_id, int hold_interest)
         {
             if (!_eventRepos.IsAccountIdExists(acc_id))
                 return StatusCode(404, new { status = "Аккаунта не существует" });
             if (!_eventRepos.IsEventExists(event_id))
                 return StatusCode(404, new { status = "Событие не найдено" });
 
-            _eventRepos.UpdateMainEvent(event_id,acc_id, Convert.ToBoolean(hold_interest), link);
+            _eventRepos.UpdateMainEvent(event_id,acc_id, Convert.ToBoolean(hold_interest));
             return StatusCode(200, new { status = "Событие было обновлено" });
         }
 

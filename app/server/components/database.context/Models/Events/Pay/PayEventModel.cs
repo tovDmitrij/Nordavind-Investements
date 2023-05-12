@@ -13,11 +13,9 @@ namespace database.context.Models.Events.Pay
         [Column("link")]
         public string Link { get; set; }
 
-        public PayEventModel(int id, string link)
-        {
-            ID = id;
-            Link = link;
-        }
+        public PayEventModel(int id, string link) : this(link) => ID = id;
+
+        public PayEventModel(string link) => Link = link;
 
         public PayEventModel() {  }
     }

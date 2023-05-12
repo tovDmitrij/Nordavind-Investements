@@ -22,7 +22,7 @@ namespace database.context.Repos.Event
 
         public IEnumerable<HistorySellEventModel> GetSellEvents(int acc_id);
 
-        public void AddMainEvent(int operationId, decimal value, DateTime date, int accountId, bool hold_interest, string link);
+        public void AddMainEvent(int operationId, decimal value, DateTime date, int accountId, bool hold_interest);
 
         public void AddFlipEvent(int operationId, decimal value, DateTime date, int account_from, int account_to, int fund_type);
 
@@ -31,7 +31,7 @@ namespace database.context.Repos.Event
         public void AddSellEvent(int operationId, decimal value, DateTime date, int accountId, int botType);
 
 
-        public void UpdateMainEvent(int mainEventId, int accountId, bool hold_interest, string link);
+        public void UpdateMainEvent(int mainEventId, int accountId, bool hold_interest);
 
         public void UpdateFlipEvent(int flipEventId, int account_from, int account_to, int fund_type);
 

@@ -24,10 +24,10 @@ namespace database.context.Repos.Event
             _db.SaveChanges();
         }
 
-        public void AddMainEvent(int operationId, decimal value, DateTime date, int accountId, bool hold_interest, string link)
+        public void AddMainEvent(int operationId, decimal value, DateTime date, int accountId, bool hold_interest)
         {
             AddEvent(operationId, value, string.Empty, date);
-            _db.TableMainEvents.Add(new(accountId, hold_interest, link));
+            _db.TableMainEvents.Add(new(accountId, hold_interest));
             _db.SaveChanges();
         }
 
@@ -107,12 +107,11 @@ namespace database.context.Repos.Event
             _db.SaveChanges();
         }
 
-        public void UpdateMainEvent(int mainEventId, int accountId, bool hold_interest, string link)
+        public void UpdateMainEvent(int mainEventId, int accountId, bool hold_interest)
         {
             var e = _db.TableMainEvents.Single(e => e.ID == mainEventId);
             e.AccountId = accountId;
             e.HoldInterest = hold_interest;
-            e.Link = link;
             _db.TableMainEvents.Update(e);
             _db.SaveChanges();
         }

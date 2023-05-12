@@ -17,9 +17,13 @@ namespace database.context.Models.Events.Main
         [Column("hold_interest")]
         public bool HoldInterest { get; set; }
 
-        public MainEventModel(int id, int accountId, bool hold_interest)
+        public MainEventModel(int id, int accountId, bool hold_interest) : this(accountId, hold_interest)
         {
             ID = id;
+        }
+
+        public MainEventModel(int accountId, bool hold_interest)
+        {
             AccountId = accountId;
             HoldInterest = hold_interest;
         }

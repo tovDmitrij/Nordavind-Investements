@@ -21,9 +21,10 @@ namespace database.context.Models.Events.Flip
         [Column("fund_type")]
         public int FundType { get; set; }
 
-        public FlipEventModel(int id, int account_from, int account_to, int fund_type)
+        public FlipEventModel(int id, int account_from, int account_to, int fund_type) => ID = id;
+
+        public FlipEventModel(int account_from, int account_to, int fund_type)
         {
-            ID = id;
             AccountFrom = account_from;
             AccountTo = account_to;
             FundType = fund_type;
