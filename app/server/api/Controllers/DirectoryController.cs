@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using database.context.Models.Data;
+using database.context.Models.Data.Account;
 using database.context.Repos.Directory;
 namespace api.Controllers
 {
@@ -23,7 +24,7 @@ namespace api.Controllers
         {
             var currencies = _directoryRepos.GetCurrencies();
             if (!currencies.Any())
-                return StatusCode(404, new { status = "Данные были не найдены" });
+                return StatusCode(404, new { status = "Список курсов пуст" });
 
             return StatusCode(200, new { status = "Список был успешно сформирован", data = currencies });
         }
@@ -34,7 +35,7 @@ namespace api.Controllers
         {
             var accountTypes = _directoryRepos.GetAccountTypes();
             if (!accountTypes.Any())
-                return StatusCode(404, new { status = "Данные были не найдены" });
+                return StatusCode(404, new { status = "Список типов счетов пуст" });
 
             return StatusCode(200, new { status = "Списик был успешно сформирован", data = accountTypes});
         }
@@ -45,7 +46,7 @@ namespace api.Controllers
         {
             var botTypes = _directoryRepos.GetBotTypes();
             if (!botTypes.Any())
-                return StatusCode(404, new { status = "Данные были не найдены" });
+                return StatusCode(404, new { status = "Список типов ботов пуст" });
 
             return StatusCode(200, new { status = "Список был успешно сформирован", data = botTypes });
         }
@@ -56,7 +57,7 @@ namespace api.Controllers
         {
             var conditions = _directoryRepos.GetConditions();
             if (!conditions.Any())
-                return StatusCode(404, new { status = "Данные были не найдены" });
+                return StatusCode(404, new { status = "Список типов условий распределений пуст" });
 
             return StatusCode(200, new { status = "Список был успешно сформирован", data = conditions });
         }
@@ -67,7 +68,7 @@ namespace api.Controllers
         {
             var operations = _directoryRepos.GetOperations();
             if (!operations.Any())
-                return StatusCode(404, new { status = "Данные были не найдены" });
+                return StatusCode(404, new { status = "Список типов операций пуст" });
 
             return StatusCode(200, new { status = "Список был успешно сформирован", data = operations });
         }
@@ -78,7 +79,7 @@ namespace api.Controllers
         {
             var funds = _directoryRepos.GetFunds();
             if (!funds.Any())
-                return StatusCode(404, new { status = "Данные были не найдены" });
+                return StatusCode(404, new { status = "Список типов средств пуст" });
 
             return StatusCode(200, new { status = "Список был успешно сформирован", data = funds });
         }
@@ -127,7 +128,7 @@ namespace api.Controllers
         public IActionResult UpdateCurrency(int id, string title, string short_title)
         {
             if (!_directoryRepos.IsCurrencyExists(id))
-                return StatusCode(404, new { status = "Данной валюты не существует" });
+                return StatusCode(404, new { status = "Валюты с заданным идентификатором не существует" });
 
             _directoryRepos.UpdateCurrency(id, title, short_title);
             return StatusCode(200, new { status = "Валюта была успешно обновлена" });
@@ -137,7 +138,7 @@ namespace api.Controllers
         public IActionResult UpdateCondition(int id, string title, decimal value, string description)
         {
             if (!_directoryRepos.IsConditionExists(id))
-                return StatusCode(404, new { status = "Данного условия не существует" });
+                return StatusCode(404, new { status = "Условия распределения с заданным идентификатором не существует" });
 
             _directoryRepos.UpdateCondition(id, title, value, description);
             return StatusCode(200, new { status = "Условие было успешно обновлено" });
@@ -147,7 +148,7 @@ namespace api.Controllers
         public IActionResult UpdateAccountType(int id, string title, string description)
         {
             if (!_directoryRepos.IsAccountTypeExists(id))
-                return StatusCode(404, new { status = "Данного типа аккаунта не существует" });
+                return StatusCode(404, new { status = "Типа счёта с заданным идентификатором не существует" });
 
             _directoryRepos.UpdateAccountType(id, title, description);
             return StatusCode(200, new { status = "Тип аккаунта успешно обновлён" });
@@ -157,10 +158,10 @@ namespace api.Controllers
         public IActionResult UpdateBotType(int id, string title, string description)
         {
             if (!_directoryRepos.IsBotTypeExists(id))
-                return StatusCode(404, new { status = "Данного типа бота не сущетсвует" });
+                return StatusCode(404, new { status = "Типа бота с заданным идентификатором не существует" });
 
             _directoryRepos.UpdateBotType(id, title, description);
-            return StatusCode(200, new { status = "Бот был успешно обновлён" });
+            return StatusCode(200, new { status = "Тип бота был успешно обновлён" });
         }
 
         #endregion
@@ -173,7 +174,7 @@ namespace api.Controllers
         public IActionResult DeleteCurrency(int id)
         {
             if (!_directoryRepos.IsCurrencyExists(id))
-                return StatusCode(404, new { status = "Данной валюты не сущетсвует" });
+                return StatusCode(404, new { status = "Валюты с заданным идентификатором не существует" });
 
             _directoryRepos.DeleteCurrency(id);
             return StatusCode(200, new { status = "Валюта была успешно удалена" });
@@ -183,7 +184,7 @@ namespace api.Controllers
         public IActionResult DeleteCondition(int id)
         {
             if (!_directoryRepos.IsConditionExists(id))
-                return StatusCode(404, new { status = "Данного условия не существует" });
+                return StatusCode(404, new { status = "Условия распределения с заданным идентификатором не существует" });
 
             _directoryRepos.DeleteCondition(id);
             return StatusCode(200, new { status = "Условие было успешно удалено" });
@@ -193,7 +194,7 @@ namespace api.Controllers
         public IActionResult DeleteAccountType(int id)
         {
             if (!_directoryRepos.IsAccountTypeExists(id))
-                return StatusCode(404, new { status = "Данного типа аккаунта не существует" });
+                return StatusCode(404, new { status = "Типа счёта с заданным идентификатором не существует" });
 
             _directoryRepos.DeleteAccountType(id);
             return StatusCode(200, new { status = "Тип аккаунта был удалён" });
@@ -203,7 +204,7 @@ namespace api.Controllers
         public IActionResult DeleteBotType(int id)
         {
             if (!_directoryRepos.IsBotTypeExists(id))
-                return StatusCode(404, new { status = "Данного типа бота не сущетсвует" });
+                return StatusCode(404, new { status = "Типа бота с заданным идентификатором не существует" });
 
             _directoryRepos.DeleteBotType(id);
             return StatusCode(200, new { status = "Тип бота был успешно удалён" });

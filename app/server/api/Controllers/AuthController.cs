@@ -29,7 +29,7 @@ namespace api.Controllers
 
                 case false:
                     _userRepos.Add(email, password);
-                    return StatusCode(200, new { status = "Пользователь успешно зарегистрирован" });
+                    return StatusCode(200, new { status = "Пользователь был успешно зарегистрирован" });
             }
         }
 
@@ -55,7 +55,7 @@ namespace api.Controllers
                         signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha512));
 
                     return StatusCode(200, new { 
-                            status = "Пользователь успешно найден",
+                            status = "Пользователь был успешно найден",
                             token = new JwtSecurityTokenHandler().WriteToken(token)});
 
                 case false:

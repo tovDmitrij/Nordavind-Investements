@@ -1,4 +1,5 @@
 ﻿using database.context.Models.Data;
+using database.context.Models.Data.Account;
 namespace database.context.Repos.Directory
 {
     public sealed class DirectoryRepos : IDirectoryRepos

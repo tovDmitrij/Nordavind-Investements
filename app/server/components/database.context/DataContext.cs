@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using database.context.Models;
 using database.context.Models.Data;
+using database.context.Models.Data.Account;
 using database.context.Models.Events;
 using database.context.Models.Events.Flip;
 using database.context.Models.Events.Main;
@@ -49,6 +50,10 @@ namespace database.context
         public DbSet<HistorySellEventModel> TableHistorySellEvents { get; set; }
 
         public DbSet<AccountModel> TableAccounts { get; set; }
+
+        public DbSet<OwnershipModel> TableOwnerships { get; set; }
+
+        public DbSet<AccountDetailModel> TableAccountDetails { get; set; }
 
         public DataContext(DbContextOptions options) : base(options) { }
     }

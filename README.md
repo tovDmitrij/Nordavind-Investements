@@ -22,11 +22,11 @@ TODO
 
 
 
-## :game_die: Архитектура API (готовность - 75%)
+## :game_die: Архитектура API (готовность - 95%)
 
 <div align="center">
 
-![nordavind-inv-api](https://user-images.githubusercontent.com/86602542/231350545-6e2d9f05-63a8-4344-806c-577baf45bc5c.svg)
+![Main](https://github.com/tovDmitrij/Nordavind-Investements/assets/86602542/294690d5-4d77-4ddc-8627-a65b9c9a3bc1)
 
 </div>
 
